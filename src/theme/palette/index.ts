@@ -83,12 +83,6 @@ const DefaultPalette = (mode: PaletteMode, skin: Skin, themeColor: ThemeColor) =
       contrastText: whiteColor
     },
     success: {
-      light: '#6AD01F',
-      main: '#56CA00',
-      dark: '#4CB200',
-      contrastText: whiteColor
-    },
-    save: {
       light: '#3b8a02',
       main: '#45a202',
       dark: '#3b8a02',
