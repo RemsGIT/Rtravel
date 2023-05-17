@@ -3,17 +3,15 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
 import prisma from "../../../../lib/prisma";
 import {PrismaAdapter} from "@next-auth/prisma-adapter";
-import toast from "react-hot-toast";
 
 
 export default async function auth(req: any, res: any) {
+
     let maxAge = 30 * 60; //30min by default
     if(req.body.remember){
         maxAge = req.body.remember === 'true' ? 30 * 24 * 60 * 60 : maxAge; // 1month if remember me
     }
-
-    console.log(maxAge)
-
+    
     return await NextAuth(req, res, {
         providers: [
             CredentialsProvider({
@@ -61,6 +59,7 @@ export default async function auth(req: any, res: any) {
                 },
             }),
         ],
+        secret: process.env.NEXT_PUBLIC_JWT_SECRET,
         callbacks: {
             // @ts-ignore
             async jwt({token, user}) {
@@ -95,7 +94,6 @@ export default async function auth(req: any, res: any) {
             maxAge: maxAge
         },
         jwt: {
-            secret: process.env.NEXT_PUBLIC_JWT_SECRET,
             maxAge: maxAge
         },
         pages: {
