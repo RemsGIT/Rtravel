@@ -55,7 +55,7 @@ const Overrides = (theme: Theme, settings: Settings) => {
 
   const chip = MuiChip()
   const list = MuiList(theme)
-  const menu = MuiMenu()
+  const menu = MuiMenu(theme, skin)
   const tabs = MuiTabs()
   const radio = MuiRadio()
   const input = MuiInput()

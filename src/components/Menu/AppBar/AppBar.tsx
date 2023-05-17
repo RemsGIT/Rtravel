@@ -62,9 +62,7 @@ const LayoutAppBar = (props: Props) => {
     }
     const userAppBarProps = Object.assign({}, appBarProps)
     delete userAppBarProps.sx
-
-    console.log(contentWidth)
-
+    
     return (
         <AppBar
             elevation={0}

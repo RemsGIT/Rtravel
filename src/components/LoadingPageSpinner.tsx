@@ -2,9 +2,9 @@ import Box, { BoxProps } from '@mui/material/Box'
 import { useTheme } from '@mui/material/styles'
 import {CircularProgress} from "@mui/material";
 
-const LoadingPageSpinner = ({ sx }: { sx?: BoxProps['sx'] }) => {
+const LoadingPageSpinner = ({ sx }: {sx?: BoxProps['sx'] }) => {
     const theme = useTheme()
-
+    
     return (
         <Box
             sx={{
@@ -14,6 +14,7 @@ const LoadingPageSpinner = ({ sx }: { sx?: BoxProps['sx'] }) => {
                 alignItems: 'center',
                 flexDirection: 'column',
                 justifyContent: 'center',
+                backgroundColor: theme.palette.customColors.darkBg,
                 ...sx
             }}
         >

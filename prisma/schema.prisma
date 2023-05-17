@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ** TYPES ** //
+enum Role {
+  USER
+  ADMIN
+}
+
+// ** USER & AUTH ** //
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  password      String
+  emailVerified Boolean
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  trips Trip[]
+  createdAt DateTime @default(now())
+  role Role @default(USER)
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ** MODELS ** //
+model Trip {
+  id        String       @id @default(cuid())
+  name     String
+  city   String?
+  start DateTime
+  end DateTime
+  vehicle String?
+  creator User @relation(fields: [creatorId], references: [id])
+  creatorId String
+  steps Step[]
+  participants Participant[]
+  createdAt DateTime @default(now())
+}
+
+model Step {
+  id String @id @default(cuid())
+  name String
+  type String?
+  city String
+  start DateTime
+  trip Trip @relation(fields: [tripId], references: [id])
+  description String?
+  tripId String
+  createdAt DateTime @default(now())
+}
+
+model Participant {
+  id String @id @default(cuid())
+  identifier String
+  name String
+  image String?
+  trip Trip @relation(fields: [tripId], references: [id])
+  tripId String
+}
+

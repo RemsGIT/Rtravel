@@ -30,9 +30,7 @@ const MenuSectionTitle = (props: Props) => {
 
     // ** Vars
     const { navCollapsed } = settings
-
-    console.log(settings)
-
+    
     return (
             <ListSubheader
                 className='nav-section-title'

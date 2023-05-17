@@ -1,9 +1,6 @@
 import './globals.scss'
 import {Inter} from 'next/font/google'
 
-import AppContainer from "@/components/AppContainer";
-import {Icon} from "@iconify/react";
-
 const inter = Inter({subsets: ['latin']})
 export const metadata = {
     title: 'Create Next App',
@@ -15,7 +12,7 @@ export default function RootLayout(props: any) {
             <html lang="en">
                 <body className={inter.className}>
                     {/* eslint-disable-next-line react/no-children-prop */}
-                    <AppContainer children={props.children}/>
+                    {props.children}
                 </body>
             </html>
     )

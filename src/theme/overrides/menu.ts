@@ -1,56 +1,28 @@
 // ** Type Imports
-import { OwnerStateThemeType } from './'
+import { Theme } from '@mui/material/styles'
 
 // ** Util Import
-import { hexToRGBA} from "@/app/utils";
+import { Skin} from "@/types/LayoutTypes";
 
-const Menu = () => {
+const Menu = (theme: Theme, skin: Skin) => {
+  const boxShadow = () => {
+    if (skin === 'bordered') {
+      return theme.shadows[0]
+    } else if (theme.palette.mode === 'light') {
+      return theme.shadows[8]
+    } else return theme.shadows[9]
+  }
+
   return {
     MuiMenu: {
       styleOverrides: {
-        paper: ({ theme }: OwnerStateThemeType) => ({
-          '& .MuiMenuItem-root .MuiCheckbox-root.Mui-checked path:first-of-type': {
-            fill: theme.palette.common.white
-          },
-          '& .MuiMenuItem-root .MuiCheckbox-root.Mui-checked path:last-of-type': {
-            fill: theme.palette.primary.main,
-            stroke: theme.palette.primary.main
+        root: {
+          '& .MuiMenu-paper': {
+            borderRadius: 5,
+            boxShadow: boxShadow(),
+            ...(skin === 'bordered' && { border: `1px solid ${theme.palette.divider}` })
           }
-        })
-      }
-    },
-    MuiMenuItem: {
-      styleOverrides: {
-        root: ({ theme }: OwnerStateThemeType) => ({
-          padding: theme.spacing(2, 4),
-          margin: theme.spacing(0, 2, 1),
-          borderRadius: theme.shape.borderRadius,
-          '&:last-child': {
-            marginBottom: 0
-          },
-          '&:not(.Mui-focusVisible):hover': {
-            color: theme.palette.primary.main,
-            backgroundColor: hexToRGBA(theme.palette.primary.main, 0.08),
-            '& .MuiListItemIcon-root, & .MuiListItemText-primary, & .MuiListItemText-secondary, & .MuiListItemSecondaryAction-root .MuiIconButton-root':
-              {
-                color: theme.palette.primary.main
-              }
-          },
-          '&.Mui-selected': {
-            color: `${theme.palette.common.white} !important`,
-            backgroundColor: `${theme.palette.primary.main} !important`,
-            '&.Mui-focusVisible': {
-              backgroundColor: `${theme.palette.primary.dark} !important`
-            },
-            '& .MuiListItemIcon-root, & .MuiListItemText-primary, & .MuiListItemText-secondary, & .MuiListItemSecondaryAction-root .MuiIconButton-root':
-              {
-                color: `${theme.palette.common.white} !important`
-              }
-          }
-        })
-      },
-      defaultProps: {
-        disableRipple: true
+        }
       }
     }
   }

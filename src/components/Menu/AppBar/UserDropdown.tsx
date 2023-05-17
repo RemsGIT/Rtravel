@@ -4,6 +4,8 @@ import MenuItem, {MenuItemProps} from "@mui/material/MenuItem";
 import {Fragment, SyntheticEvent, useState} from "react";
 import {useRouter} from "next/navigation";
 import {Avatar, Badge, Box, Divider, Menu, Typography} from "@mui/material";
+import Icon from "@/components/Icon";
+import {signOut} from "next-auth/react";
 
 interface Props {
     settings: Settings
@@ -56,8 +58,7 @@ const UserDropdown = (props: Props) => {
     }
 
     const handleLogout = () => {
-        //logout()
-        console.log('logout')
+        signOut()
         handleDropdownClose()
     }
 
@@ -107,29 +108,19 @@ const UserDropdown = (props: Props) => {
                     </Box>
                 </Box>
                 <Divider sx={{ mt: '0 !important' }} />
-                <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
+                <MenuItem sx={{ pt: 0 , mt: 1}} onClick={() => handleDropdownClose()}>
                     <Box sx={styles}>
-                        <span>icon_check</span>
-                        My Profile
-                    </Box>
-                </MenuItem>
-                <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
-                    <Box sx={styles}>
-                        <span>icon_settings</span>
-                        Settings
-                    </Box>
-                </MenuItem>
-                <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
-                    <Box sx={styles}>
-                        <span>icon_check</span>
-                        Billing
+                        <Icon icon='mdi:account-outline' />
+                        Profil
                     </Box>
                 </MenuItem>
                 <Divider />
-                <MenuItem sx={{ p: 0 }} onClick={handleLogout}>
+                <MenuItem
+                    sx={{ py: 2, '& svg': { mr: 2, fontSize: '1.375rem', color: 'text.primary' } }}
+                    onClick={handleLogout}>
                     <Box sx={styles}>
-                        <span>icon_check</span>
-                        Sign Out
+                        <Icon icon='mdi:logout-variant' />
+                        Déconnexion
                     </Box>
                 </MenuItem>
             </Menu>

@@ -40,13 +40,14 @@ const App = (props: any) => {
 
     const hidden = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'))
 
+    
     const toggleNavVisibility = () => {
         setNavVisible(!navVisible)
     }
 
     useEffect(() => {
         setisLoading(false)
-    }, [])
+    }, [props.settings.mode])
     
     return (
         <>
