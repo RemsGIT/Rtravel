@@ -47,7 +47,7 @@ const AuthProvider = ({ children }: Props) => {
                     // Send verify email to user
 
                     // Redirect user to connexion
-                    router.push('/auth/login');
+                    router.push('/login');
 
                     // Toast
                     toast.success("Inscription validée, un mail de vérification t'a été envoyé.", {

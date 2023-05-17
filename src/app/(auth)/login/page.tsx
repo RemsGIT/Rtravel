@@ -2,43 +2,39 @@
 
 import {styled, useTheme} from "@mui/material/styles";
 import {useSettings} from "@/hooks/useSettings";
-import {useAuth} from "@/hooks/useAuth";
 import {
     Box,
     BoxProps, Button, Checkbox, Divider,
-    FormControl, FormControlLabel ,FormHelperText, IconButton,
+    FormControl, FormHelperText, IconButton,
     InputAdornment, InputLabel,
     OutlinedInput, TextField,
     Typography,
     TypographyProps,
     useMediaQuery
 } from "@mui/material";
-import {Fragment, useState} from "react";
+import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
+import {useState} from "react";
 import Link from "next/link";
 
 // Third parties
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 
+import {useRouter} from "next/navigation";
 import themeConfig from "@/theme/ThemeConfig";
 import { useForm, Controller } from 'react-hook-form'
 import Icon from "@/components/Icon";
+import {signIn} from "next-auth/react";
+import toast from "react-hot-toast";
 
-const defaultValues = {
-    email: '',
-    username: '',
-    password: '',
-    terms: false
-}
+// ** Types
 interface FormData {
     email: string
-    terms: boolean
-    username: string
     password: string
 }
 
 // ** Styled Components
-const RegisterIllustrationWrapper = styled(Box)<BoxProps>(({ theme }) => ({
+const LoginIllustrationWrapper = styled(Box)<BoxProps>(({ theme }) => ({
     padding: theme.spacing(20),
     paddingRight: '0 !important',
     [theme.breakpoints.down('lg')]: {
@@ -46,19 +42,10 @@ const RegisterIllustrationWrapper = styled(Box)<BoxProps>(({ theme }) => ({
     }
 }))
 
-const RegisterIllustration = styled('img')(({ theme }) => ({
-    maxWidth: '46rem',
+const LoginIllustration = styled('img')(({ theme }) => ({
+    maxWidth: '48rem',
     [theme.breakpoints.down('lg')]: {
         maxWidth: '35rem'
-    }
-}))
-
-const TreeIllustration = styled('img')(({ theme }) => ({
-    bottom: 0,
-    left: '1.875rem',
-    position: 'absolute',
-    [theme.breakpoints.down('lg')]: {
-        left: 0
     }
 }))
 
@@ -85,59 +72,100 @@ const TypographyStyled = styled(Typography)<TypographyProps>(({ theme }) => ({
 }))
 
 const LinkStyled = styled(Link)(({ theme }) => ({
+    fontSize: '0.875rem',
     textDecoration: 'none',
     color: theme.palette.primary.main
 }))
 
-const RegisterPage = () => {
-    // ** States
+const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ theme }) => ({
+    '& .MuiFormControlLabel-label': {
+        fontSize: '0.875rem',
+        color: theme.palette.text.secondary
+    }
+}))
+
+const schema = yup.object().shape({
+    email: yup.string().email("L'adresse mail n'est pas correct").required("Veuillez saisir votre adresse email"),
+    password: yup.string().min(5,"5 caractères minimum").required(),
+})
+
+const LoginPage = () => {
+    const [rememberMe, setRememberMe] = useState<boolean>(true)
     const [showPassword, setShowPassword] = useState<boolean>(false)
 
     // ** Hooks
     const theme = useTheme()
     const { settings } = useSettings()
     const hidden = useMediaQuery(theme.breakpoints.down('md'))
-    const { register } = useAuth()
 
     // ** Vars
     const { skin } = settings
-    const schema = yup.object().shape({
-        password: yup.string().min(5,"5 caractères minimum" ).required(),
-        username: yup.string().min(3, "3 caractères minimum").required(),
-        email: yup.string().email("L'adresse mail n'est pas correct").required("Veuillez saisir votre adresse mail"),
-        terms: yup.bool().oneOf([true], "Tu dois accepter les conditions d'utilisation")
-    })
+
+    const router = useRouter();
 
     const {
         control,
         handleSubmit,
         formState: { errors }
     } = useForm({
-        defaultValues,
+        defaultValues: {email: '', password: ''},
         mode: 'onBlur',
         resolver: yupResolver(schema)
     })
 
-    const onSubmit = (data: FormData) => {
-        const { email, username, password, terms } = data
+    const imageSource = skin === 'bordered' ? 'auth-v2-login-illustration-bordered' : 'auth-v2-login-illustration'
 
-        register({ email, username, password, terms }, (err: any) => {
-            console.log(err)
-        })
+    async function onSubmit (data: FormData) {
+        const { email, password } = data
+
+        await signIn('credentials', {
+            redirect: false,
+            email: email,
+            password: password,
+            remember: rememberMe,
+            callbackUrl: '/'
+        }).then(response => {
+            toast.remove()
+
+            let errorMessage = "Veuillez réessayer plus tard."
+            if(response) {
+                if(response.ok) {
+                    router.push((response.url ?? '/') + '?afterlogin=true')
+
+                    return true
+                }
+                else {
+                    // Only one toast
+                    // @ts-ignore
+                    errorMessage = response.error
+                }
+            }
+
+            toast.error(errorMessage, {
+                style: {
+                    padding: '16px',
+                    color: theme.palette.error.main,
+                    border: `1px solid ${theme.palette.error.main}`
+                },
+                iconTheme: {
+                    primary: theme.palette.error.main,
+                    secondary: theme.palette.primary.contrastText
+                }
+            })
+
+        });
     }
-
-    const imageSource = skin === 'bordered' ? 'auth-v2-register-illustration-bordered' : 'auth-v2-register-illustration'
 
     return (
         <Box className='content-right'>
             {!hidden ? (
                 <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
-                    <RegisterIllustrationWrapper>
-                        <RegisterIllustration
-                            alt='register-illustration'
+                    <LoginIllustrationWrapper>
+                        <LoginIllustration
+                            alt='login-illustration'
                             src={`/images/pages/${imageSource}-${theme.palette.mode}.png`}
                         />
-                    </RegisterIllustrationWrapper>
+                    </LoginIllustrationWrapper>
                 </Box>
             ) : null}
             <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
@@ -235,30 +263,10 @@ const RegisterPage = () => {
                             </Typography>
                         </Box>
                         <Box sx={{ mb: 6 }}>
-                            <TypographyStyled variant='h5'>L'aventure commence ici 🚀</TypographyStyled>
-                            <Typography variant='body2'>Planifie et organise tes voyages facilement !</Typography>
+                            <TypographyStyled variant='h5'>Bienvenue sur {themeConfig.templateName} 👋</TypographyStyled>
+                            <Typography variant='body2'>Connecte toi à ton compte pour organiser tes voyages</Typography>
                         </Box>
                         <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
-                            <FormControl fullWidth sx={{ mb: 4 }}>
-                                <Controller
-                                    name='username'
-                                    control={control}
-                                    rules={{ required: true }}
-                                    render={({ field: { value, onChange, onBlur } }) => (
-                                        <TextField
-                                            value={value}
-                                            onBlur={onBlur}
-                                            label="Nom d'utilisateur"
-                                            onChange={onChange}
-                                            placeholder='johndoe'
-                                            error={Boolean(errors.username)}
-                                        />
-                                    )}
-                                />
-                                {errors.username && (
-                                    <FormHelperText sx={{ color: 'error.main' }}>{errors.username.message}</FormHelperText>
-                                )}
-                            </FormControl>
                             <FormControl fullWidth sx={{ mb: 4 }}>
                                 <Controller
                                     name='email'
@@ -266,12 +274,12 @@ const RegisterPage = () => {
                                     rules={{ required: true }}
                                     render={({ field: { value, onChange, onBlur } }) => (
                                         <TextField
-                                            value={value}
                                             label='Email'
+                                            value={value}
                                             onBlur={onBlur}
                                             onChange={onChange}
                                             error={Boolean(errors.email)}
-                                            placeholder='user@email.com'
+                                            placeholder='admin@materio.com'
                                         />
                                     )}
                                 />
@@ -279,7 +287,7 @@ const RegisterPage = () => {
                             </FormControl>
                             <FormControl fullWidth>
                                 <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.password)}>
-                                    Mot de passe
+                                    Password
                                 </InputLabel>
                                 <Controller
                                     name='password'
@@ -288,8 +296,8 @@ const RegisterPage = () => {
                                     render={({ field: { value, onChange, onBlur } }) => (
                                         <OutlinedInput
                                             value={value}
-                                            label='Mot de passe'
                                             onBlur={onBlur}
+                                            label='Password'
                                             onChange={onChange}
                                             id='auth-login-v2-password'
                                             error={Boolean(errors.password)}
@@ -301,7 +309,7 @@ const RegisterPage = () => {
                                                         onMouseDown={e => e.preventDefault()}
                                                         onClick={() => setShowPassword(!showPassword)}
                                                     >
-                                                        <Icon icon={showPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} />
+                                                        <Icon icon={showPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} fontSize={20} />
                                                     </IconButton>
                                                 </InputAdornment>
                                             }
@@ -309,59 +317,29 @@ const RegisterPage = () => {
                                     )}
                                 />
                                 {errors.password && (
-                                    <FormHelperText sx={{ color: 'error.main' }}>{errors.password.message}</FormHelperText>
+                                    <FormHelperText sx={{ color: 'error.main' }} id=''>
+                                        {errors.password.message}
+                                    </FormHelperText>
                                 )}
                             </FormControl>
-
-                            <FormControl sx={{ mt: 1.5, mb: 4 }} error={Boolean(errors.terms)}>
-                                <Controller
-                                    name='terms'
-                                    control={control}
-                                    rules={{ required: true }}
-                                    render={({ field: { value, onChange } }) => {
-                                        return (
-                                            <FormControlLabel
-                                                sx={{
-                                                    ...(errors.terms ? { color: 'error.main' } : null),
-                                                    '& .MuiFormControlLabel-label': { fontSize: '0.875rem' }
-                                                }}
-                                                control={
-                                                    <Checkbox
-                                                        checked={value}
-                                                        onChange={onChange}
-                                                        sx={errors.terms ? { color: 'error.main' } : null}
-                                                    />
-                                                }
-                                                label={
-                                                    <Fragment>
-                                                        <Typography
-                                                            variant='body2'
-                                                            component='span'
-                                                        >
-                                                            J'accepte les {' '}
-                                                        </Typography>
-                                                        <LinkStyled href='/' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
-                                                            conditions générales d'utilisation
-                                                        </LinkStyled>
-                                                    </Fragment>
-                                                }
-                                            />
-                                        )
-                                    }}
+                            <Box
+                                sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
+                            >
+                                <FormControlLabel
+                                    label='Se souvenir de moi'
+                                    control={<Checkbox checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} />}
                                 />
-                                {errors.terms && (
-                                    <FormHelperText sx={{ mt: 0, color: 'error.main' }}>{errors.terms.message}</FormHelperText>
-                                )}
-                            </FormControl>
+                                <LinkStyled href='/forgot-password'>Mot de passe oublié?</LinkStyled>
+                            </Box>
                             <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
-                                S'inscrire
+                                CONNEXION
                             </Button>
                             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                                 <Typography variant='body2' sx={{ mr: 2 }}>
-                                    Déjà un compte?
+                                    Nouveau sur Rtravel?
                                 </Typography>
                                 <Typography variant='body2'>
-                                    <LinkStyled href='/auth/login'>Se connecter</LinkStyled>
+                                    <LinkStyled href='/register'>Créer un compte</LinkStyled>
                                 </Typography>
                             </Box>
                             <Divider sx={{ my: theme => `${theme.spacing(5)} !important` }}>ou</Divider>
@@ -407,4 +385,4 @@ const RegisterPage = () => {
     )
 }
 
-export default RegisterPage;
+export default LoginPage;

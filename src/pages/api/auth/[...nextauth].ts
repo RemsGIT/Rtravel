@@ -97,7 +97,7 @@ export default async function auth(req: any, res: any) {
             maxAge: maxAge
         },
         pages: {
-            signIn: '/auth/login'
+            signIn: '/login'
         },
         adapter: PrismaAdapter(prisma),
     })
