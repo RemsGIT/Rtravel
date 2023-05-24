@@ -1,5 +1,5 @@
 "use client"
-import ModalCreateTrip from "@/components/Modals/ModalCreateTrip";
+import CreateTripSidebar from "@/components/Sidebars/CreateTripSidebar";
 import {useState} from "react";
 import {Button} from "@mui/material";
 
@@ -13,7 +13,7 @@ export default function Trips() {
 
     return (
         <>
-            <ModalCreateTrip open={openModalCreate} handleClose={handleCloseModalCreate}/>
+            <CreateTripSidebar open={openModalCreate} handleClose={handleCloseModalCreate}/>
             
             <Button variant={"contained"} color={"primary"} onClick={() => setOpenModalCreate(true)}>Nouveau voyage</Button>
         </>

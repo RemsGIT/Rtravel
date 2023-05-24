@@ -15,6 +15,7 @@
     "@iconify/react": "^4.1.0",
     "@mui/material": "^5.12.3",
     "@mui/utils": "^5.12.3",
+    "@mui/x-date-pickers": "^6.5.0",
     "@next-auth/prisma-adapter": "^1.0.6",
     "@prisma/client": "4.14.0",
     "@types/node": "20.0.0",
@@ -22,6 +23,7 @@
     "@types/react-dom": "18.2.4",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
+    "dayjs": "^1.11.7",
     "eslint": "8.39.0",
     "eslint-config-next": "13.4.1",
     "next": "13.4.1",
@@ -29,6 +31,7 @@
     "nextjs-toploader": "^1.4.2",
     "nprogress": "^0.2.0",
     "react": "18.2.0",
+    "react-datepicker": "^4.11.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
     "react-hot-toast": "^2.4.1",
@@ -38,6 +41,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/react-datepicker": "^4.11.2",
     "prisma": "^4.14.0"
   }
 }
