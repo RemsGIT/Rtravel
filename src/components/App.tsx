@@ -6,7 +6,6 @@ import {Box, BoxProps, useMediaQuery} from "@mui/material";
 import themeConfig from "@/theme/ThemeConfig";
 import {useEffect, useState} from "react";
 import routes from "@/configs/routes";
-import {boolean} from "zod";
 import LoadingPageSpinner from "@/components/LoadingPageSpinner";
 
 const MainContentWrapper = styled(Box)<BoxProps>({
