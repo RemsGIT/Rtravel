@@ -235,7 +235,7 @@ const RegisterPage = () => {
                             </Typography>
                         </Box>
                         <Box sx={{ mb: 6 }}>
-                            <TypographyStyled variant='h5'>L'aventure commence ici 🚀</TypographyStyled>
+                            <TypographyStyled variant='h5'>{"L'aventure commence ici 🚀"} </TypographyStyled>
                             <Typography variant='body2'>Planifie et organise tes voyages facilement !</Typography>
                         </Box>
                         <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
@@ -338,10 +338,10 @@ const RegisterPage = () => {
                                                             variant='body2'
                                                             component='span'
                                                         >
-                                                            J'accepte les {' '}
+                                                            {"J'accepte les"} {' '}
                                                         </Typography>
-                                                        <LinkStyled href='/' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
-                                                            conditions générales d'utilisation
+                                                        <LinkStyled href='/' onClick={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}>
+                                                            {"conditions générales d'utilisation"}
                                                         </LinkStyled>
                                                     </Fragment>
                                                 }
@@ -354,7 +354,7 @@ const RegisterPage = () => {
                                 )}
                             </FormControl>
                             <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
-                                S'inscrire
+                                {"S'inscrire"}
                             </Button>
                             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                                 <Typography variant='body2' sx={{ mr: 2 }}>
@@ -370,7 +370,7 @@ const RegisterPage = () => {
                                     href='/'
                                     component={Link}
                                     sx={{ color: '#497ce2' }}
-                                    onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}
+                                    onClick={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
                                 >
                                     <Icon icon='mdi:facebook' />
                                 </IconButton>
@@ -378,14 +378,14 @@ const RegisterPage = () => {
                                     href='/'
                                     component={Link}
                                     sx={{ color: '#1da1f2' }}
-                                    onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}
+                                    onClick={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
                                 >
                                     <Icon icon='mdi:twitter' />
                                 </IconButton>
                                 <IconButton
                                     href='/'
                                     component={Link}
-                                    onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}
+                                    onClick={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
                                     sx={{ color: theme => (theme.palette.mode === 'light' ? '#272727' : 'grey.300') }}
                                 >
                                     <Icon icon='mdi:github' />
@@ -394,7 +394,7 @@ const RegisterPage = () => {
                                     href='/'
                                     component={Link}
                                     sx={{ color: '#db4437' }}
-                                    onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}
+                                    onClick={(e: React.MouseEvent<HTMLElement>) => e.preventDefault()}
                                 >
                                     <Icon icon='mdi:google' />
                                 </IconButton>

@@ -16,7 +16,8 @@ import {forwardRef, Fragment, useEffect, useState} from "react";
 import {addDays, format} from "date-fns";
 import Icon from "@/components/Icon";
 import {fr} from "date-fns/locale";
-
+import axios from "axios";
+import toast from "react-hot-toast";
 
 
 interface PickerProps {
@@ -51,6 +52,7 @@ const CreateTripSidebar = ({open, handleClose}: { open: boolean, handleClose: ()
             setValue("start", DEFAULT_START)
             setValue("end", DEFAULT_END)
             handleOnChangeDatePicker([DEFAULT_START, DEFAULT_END])
+            reset()
         }
         else {
             handleChangeVehicleSelect("")
@@ -59,11 +61,13 @@ const CreateTripSidebar = ({open, handleClose}: { open: boolean, handleClose: ()
 
     const handleOnChangeDatePicker = (dates: any) => {
         const [start, end] = dates
+
         setStartDate(start)
         setEndDate(end)
-        
-        setValue("start", startDate)
-        setValue("end", endDate)
+
+        setValue("start", start)
+        setValue("end", end)
+
     }
     
     const handleChangeVehicleSelect = (vehicle: string | String) => {
@@ -77,11 +81,17 @@ const CreateTripSidebar = ({open, handleClose}: { open: boolean, handleClose: ()
         handleClose()
     }
 
-    const onSubmit = (data: any) => {
-        console.log(data)
+    const onSubmit = async (data: any) => {
+        axios
+            .post('/api/trips', {data})
+            .then(response => {
+                if(response.data.status === "success") {
+                    toast.success(`Voyage ${response.data.trip.name} créé !`)
+                }
 
-        reset()
-        handleClose()
+                reset()
+                handleClose()
+            })
     }
 
     const RenderSidebarFooter = () => {
@@ -139,7 +149,7 @@ const CreateTripSidebar = ({open, handleClose}: { open: boolean, handleClose: ()
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <DatePickerWrapper>
                         <FormControl fullWidth={true} sx={{ mb: 6 }}>
-                            <TextField label={"Nom"}  {...register("name")}/>
+                            <TextField label={"Nom"}  {...register("name")} placeholder={"Nom du voyage"}/>
                         </FormControl>
                         <Box sx={{ mb: 6 }}>
                             <DatePicker
