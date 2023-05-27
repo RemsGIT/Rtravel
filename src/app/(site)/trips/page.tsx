@@ -29,7 +29,6 @@ export default function Trips() {
             <Button variant={"contained"} color={"primary"} onClick={() => setOpenModalCreate(true)}>Nouveau voyage</Button>
 
             {/* trips list */}
-            
             <List trips={userTrips} />
         </>
     )
