@@ -1,4 +1,4 @@
-import {Trip} from ".prisma/client";
+import {Trip} from "@prisma/client";
 import React from "react";
 import {Grid} from "@mui/material";
 import Card from "@/components/Trips/Card";

@@ -3,9 +3,8 @@ import CreateTripSidebar from "@/components/Sidebars/CreateTripSidebar";
 import {useEffect, useState} from "react";
 import {Button} from "@mui/material";
 import axios from "axios";
-import {Trip} from ".prisma/client";
+import {Trip} from "@prisma/client";
 import List from "@/components/Trips/List";
-import {mockSession} from "next-auth/client/__tests__/helpers/mocks";
 
 export default function Trips() {
     

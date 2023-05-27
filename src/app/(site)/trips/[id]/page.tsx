@@ -1,10 +1,10 @@
 "use client"
-import {Box, CircularProgress, Grid, Typography, useMediaQuery, Tab} from "@mui/material";
+import {Box, Grid, useMediaQuery, Tab} from "@mui/material";
 import {SyntheticEvent, useEffect, useState} from "react";
 import General from "@/components/Trips/Tabs/General";
 import Team from "@/components/Trips/Tabs/Team";
 import Header from "@/components/Trips/Utils/Header";
-import {Trip} from ".prisma/client";
+import {Trip} from "@prisma/client";
 import axios from "axios";
 import {styled, Theme} from "@mui/material/styles";
 

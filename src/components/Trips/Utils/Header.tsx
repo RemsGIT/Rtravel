@@ -1,4 +1,4 @@
-import {Trip} from ".prisma/client";
+import {Trip} from "@prisma/client";
 import {Box, Button, Card, CardContent, CardMedia, Typography} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import Icon from "@/components/Icon";
