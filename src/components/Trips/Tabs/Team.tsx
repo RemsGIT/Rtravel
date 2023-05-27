@@ -1,13 +1,18 @@
 import {useEffect} from "react";
 import {Box, CircularProgress, Typography} from "@mui/material";
+import axios from "axios";
 
-const Team = ({isLoading, handleLoading} : {isLoading: boolean, handleLoading: (isLoading: boolean) => void}) => {
+const Team = ({tripId, isLoading, handleLoading} : {tripId: string, isLoading: boolean, handleLoading: (isLoading: boolean) => void}) => {
 
     useEffect(() => {
-        console.log('team')
-        setTimeout(() => {
-            handleLoading(false)
-        }, 1000)
+        axios
+            .get(`${process.env.NEXT_PUBLIC_APPURL}/api/trips/${tripId}/team`)
+            .then(response => {
+                console.log(response)
+
+                handleLoading(false)
+
+            })
     }, [])
 
 

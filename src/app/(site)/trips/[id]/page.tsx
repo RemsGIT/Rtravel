@@ -69,8 +69,8 @@ const Trip = ({params} : {params: Params}) => {
                 {/* Header of the trip */}
                 <Grid item xs={12}>
                     <Header trip={trip} />
-
                 </Grid>
+                
                 {/* Menu and content */}
                 <Grid item xs={12}>
                     <TabContext value={tabActive}>
@@ -102,10 +102,11 @@ const Trip = ({params} : {params: Params}) => {
                                     />
                                     <Tab
                                         value='2'
+                                        disabled={true}
                                         label={
                                             <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
                                                 <Icon fontSize={20} icon='mdi:cash' />
-                                                {!hideText && 'Budget'}
+                                                {!hideText && 'Budget (prochainement)'}
                                             </Box>
                                         }
                                     />
@@ -113,8 +114,8 @@ const Trip = ({params} : {params: Params}) => {
                             </Grid>
                             <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(4)} !important` }}>
                                 <TabPanel sx={{ p: 0 }} value={tabActive}>
-                                    {tabActive === "0" && <General isLoading={isLoading} handleLoading={handleLoading} />}
-                                    {tabActive === "1" && <Team isLoading={isLoading}  handleLoading={handleLoading}/>}
+                                    {tabActive === "0" && <General tripId={params.id} isLoading={isLoading} handleLoading={handleLoading} />}
+                                    {tabActive === "1" && <Team tripId={params.id} isLoading={isLoading}  handleLoading={handleLoading}/>}
                                 </TabPanel>
                             </Grid>
                         </Grid>
