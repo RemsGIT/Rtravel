@@ -10,9 +10,7 @@ const Home = () => {
     const router = useRouter()
     const searchParams = useSearchParams();
     const { data: session, status } = useSession({ required: true})
-
-    console.log('ok')
-
+    
     useEffect(() => {
         if (/*auth.user && auth.user.role*/status === "authenticated") {
             router.replace('/')

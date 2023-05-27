@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if(session) {
         switch(req.method) {
-            case 'GET': getAllTrips(); break;
+            case 'GET': await getUserTrips(session?.user, res); break;
             case 'POST': await createTrip(req.body.data, session?.user, res); break;
         }
     }
@@ -34,8 +34,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 }
 
-function getAllTrips() {
-    
+async function getUserTrips(user: any, res: NextApiResponse) {
+    const trips = await prisma.trip.findMany({
+        where: {creatorId: user.id}
+    })
+
+    res.status(200).json({status: "success", trips})
 }
 
 async function createTrip(trip: tripRequest, user: any, res: NextApiResponse) {
