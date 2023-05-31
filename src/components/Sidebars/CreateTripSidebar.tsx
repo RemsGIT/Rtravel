@@ -18,6 +18,7 @@ import Icon from "@/components/Icon";
 import {fr} from "date-fns/locale";
 import axios from "axios";
 import toast from "react-hot-toast";
+import SelectCity from "@/components/Utils/SelectCity";
 
 
 interface PickerProps {
@@ -34,11 +35,13 @@ const CreateTripSidebar = ({open, handleClose}: { open: boolean, handleClose: ()
     const [startDate, setStartDate] = useState<Date>(DEFAULT_START)
     const [endDate, setEndDate] = useState<Date>(DEFAULT_END)
     
+    const [resetCity, setResetCity] = useState<boolean>(false);
     const [vehicle, setVehicle] = useState<string|String>("");
     
     const {register, handleSubmit, reset, setValue, getValues} = useForm({
         defaultValues: {
             name: "",
+            city: "",
             start: DEFAULT_START,
             end: DEFAULT_END,
             vehicle: "",
@@ -49,16 +52,23 @@ const CreateTripSidebar = ({open, handleClose}: { open: boolean, handleClose: ()
     // Reset date picker when reoping the sidebar
     useEffect(() => {
         if(open) {
+            setResetCity(false)
+
             setValue("start", DEFAULT_START)
             setValue("end", DEFAULT_END)
             handleOnChangeDatePicker([DEFAULT_START, DEFAULT_END])
             reset()
         }
         else {
+            setResetCity(true)
             handleChangeVehicleSelect("")
         }
     }, [open])
 
+    const handleOnChangeCity = (city: string) => {
+        setValue("city", city)
+    }
+    
     const handleOnChangeDatePicker = (dates: any) => {
         const [start, end] = dates
 
@@ -150,6 +160,9 @@ const CreateTripSidebar = ({open, handleClose}: { open: boolean, handleClose: ()
                     <DatePickerWrapper>
                         <FormControl fullWidth={true} sx={{ mb: 6 }}>
                             <TextField label={"Nom"}  {...register("name")} placeholder={"Nom du voyage"}/>
+                        </FormControl>
+                        <FormControl fullWidth={true} sx={{mb: 6}}>
+                            <SelectCity {...register("city")} handleOnChange={handleOnChangeCity} resetText={resetCity}/>
                         </FormControl>
                         <Box sx={{ mb: 6 }}>
                             <DatePicker

@@ -2,7 +2,7 @@ import {Step} from "@prisma/client";
 import React, {useState} from "react";
 import {Card, CardContent, CardHeader} from "@mui/material";
 import Icon from "@/components/Icon";
-import OptionsMenuCard from "@/components/OptionsMenuCard";
+import OptionsMenuCard from "@/components/Utils/OptionsMenuCard";
 import ActivitiesSlider from "@/components/Trips/Utils/ActivitiesSlider";
 
 const WidgetActivities = ({activities, start, end} : {activities: Step[], start: Date, end: Date}) => {

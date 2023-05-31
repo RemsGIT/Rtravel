@@ -5,6 +5,7 @@ import prisma from "../../../../lib/prisma";
 
 interface tripRequest {
     name: string,
+    city: string,
     start: Date,
     end: Date,
     vehicle: string
@@ -46,7 +47,7 @@ async function createTrip(trip: tripRequest, user: any, res: NextApiResponse) {
     
     const newTripData: newTripType = {
         name: trip.name,
-        city: 'temporary',
+        city: trip.city,
         start: trip.start,
         end: trip.end,
         vehicle: trip.vehicle,
