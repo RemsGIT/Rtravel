@@ -127,6 +127,7 @@ const LoginPage = () => {
         }).then(response => {
             toast.remove()
 
+            console.log(response)
             let errorMessage = "Veuillez réessayer plus tard."
             if(response) {
                 if(response.ok) {

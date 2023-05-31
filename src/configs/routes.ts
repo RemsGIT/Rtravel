@@ -10,13 +10,6 @@ const routes: Array<NavGroup | NavLink | NavSectionTitle> = [
         title: 'Voyages',
         path: '/trips',
         icon: 'mdi:email-outline',
-    },
-    {
-        path: '/acl',
-        action: 'read',
-        subject: 'acl-page',
-        title: 'Access Control',
-        icon: 'tabler:shield',
     }
 ]
 
