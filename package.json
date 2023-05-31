@@ -27,6 +27,7 @@
     "dayjs": "^1.11.7",
     "eslint": "8.39.0",
     "eslint-config-next": "13.4.1",
+    "keen-slider": "^6.8.5",
     "next": "13.4.1",
     "next-auth": "^4.22.1",
     "nextjs-toploader": "^1.4.2",
