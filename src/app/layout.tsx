@@ -11,6 +11,9 @@ export default function RootLayout(props: any) {
     return (
             <html lang="en">
                 <body className={inter.className}>
+                    <script async
+                            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDc14yoTa1jbLUY7PefSHQemTD3JcDgYrI&libraries=places&amp;language=fr">
+                    </script>
                     {/* eslint-disable-next-line react/no-children-prop */}
                     {props.children}
                 </body>

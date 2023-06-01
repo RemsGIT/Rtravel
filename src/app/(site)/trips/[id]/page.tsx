@@ -60,7 +60,6 @@ const Trip = ({params} : {params: Params}) => {
             .then(response => (
                 setTrip(response.data.trip)
             ))
-        
     }, [])
  
     return (
