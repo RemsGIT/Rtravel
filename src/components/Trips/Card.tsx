@@ -2,13 +2,21 @@ import {Trip} from "@prisma/client";
 
 import {Box, Button, Card as MuiCard, CardMedia, Typography} from "@mui/material";
 import Icon from "@/components/Icon";
-import {useRouter} from "next/navigation";
 import Link from "next/link";
+import {startInString, toFrenchDate} from "@/app/utils";
+import {differenceInDays} from "date-fns";
 
 const Card = ({trip} : {trip: Trip}) => {
+    const startIn = differenceInDays(new Date(trip.start), new Date()) < 0 ? -1 : differenceInDays(new Date(trip.start), new Date())
+    let startInBackgroundColor: any = "success"
     
-    const router = useRouter();
-  
+    if(startIn > 30) {
+        startInBackgroundColor = "danger"
+    }
+    else if(startIn > 5) {
+        startInBackgroundColor = "warning"
+    }
+    
     return (
         <Link href={`trips/${trip.id}`}>
             <MuiCard sx={{cursor: 'pointer', borderRadius: '20px'}}>
@@ -21,7 +29,7 @@ const Card = ({trip} : {trip: Trip}) => {
                     <Box
                         sx={{position: 'absolute',right: "10px",top: "10px"}}
                     >
-                        <Button variant={"contained"} color={"success"} sx={{px: "7px", py: "4.2px", fontSize: "13px", width: "max-content", minWidth: "30px", height:'25px', fontWeight: "900"}}>(dans) 3</Button>
+                        <Button variant={"contained"} color={startInBackgroundColor} sx={{px: "7px", py: "4.2px", fontSize: "13px", width: "max-content", minWidth: "30px", height:'25px', fontWeight: "900"}}>{startInString(startIn)}</Button>
                     </Box>
                     <Box
                         sx={{
@@ -40,10 +48,10 @@ const Card = ({trip} : {trip: Trip}) => {
                     >
                         <Typography variant="h5" color={"white"}>{trip.name}</Typography>
                         <Typography variant="body2" color={"white"} fontSize={'12px'}>
-                            <Box>
+                            <>
                                 <Icon icon='mdi:city' style={{verticalAlign: "bottom"}} fontSize={'20px'} /> {trip.city}
-                                <Icon icon='mdi:calendar' style={{verticalAlign: "bottom", marginLeft: "5px"}} fontSize={'20px'}/> dates
-                            </Box>
+                                <Icon icon='mdi:calendar' style={{verticalAlign: "bottom", marginLeft: "5px"}} fontSize={'20px'}/> {toFrenchDate(trip.start)}
+                            </>
                         </Typography>
                     </Box>
                 </Box>

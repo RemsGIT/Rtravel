@@ -102,7 +102,7 @@ const Menu = (props: Props) => {
                 <List className='nav-items' sx={{
                     pt: 0,
                     transition: 'padding .25s ease',
-                    '& > :first-child': { mt: '0' },
+                    '& > :first-of-type': { mt: '0' },
                     pr: !settings.navCollapsed || (settings.navCollapsed && navHover) ? 4.5 : 1.25
                 }}>
                     {RenderMenuItems}

@@ -2,6 +2,7 @@ import {Trip} from "@prisma/client";
 import {Box, Button, Card, CardContent, CardMedia, Typography} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import Icon from "@/components/Icon";
+import {toFrenchDate, uppercaseFirst} from "@/app/utils";
 
 const ProfilePicture = styled('img')(({theme}) => ({
     width: 120,
@@ -64,7 +65,7 @@ const Header = ({trip}: { trip: Trip | undefined }) => {
                             </Box>
                             <Box sx={{ mr: 5, display: 'flex', alignItems: 'center', '& svg': { mr: 1, color: 'text.secondary' } }}>
                                 <Icon icon='mdi:airplane-clock' />
-                                <Typography sx={{ ml: 1, color: 'text.secondary', fontWeight: 600 }}> Départ le {trip.start.toString()}</Typography>
+                                <Typography sx={{ ml: 1, color: 'text.secondary', fontWeight: 600 }}> Départ le {uppercaseFirst(toFrenchDate(trip.start, true))}</Typography>
                             </Box>
                         </Box>
 

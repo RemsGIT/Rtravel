@@ -9,6 +9,7 @@ import Icon from "@/components/Icon";
 import clsx from "clsx";
 import {TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator} from "@mui/lab";
 import ArrowEmptyData from "@/components/Utils/ArrowEmptyData";
+import {toFrenchDate, uppercaseFirst} from "@/app/utils";
 
 // Styled components
 const Timeline = styled(MuiTimeline)<TimelineProps>({
@@ -96,7 +97,7 @@ const ActivitiesSlider = ({start, end, activities}: { start: Date, end: Date, ac
                         display: 'flex',
                         alignItems: 'center',
                         textTransform: 'capitalize'
-                    }}>{dateSlider.toDateString()}</Typography>
+                    }}>{uppercaseFirst(toFrenchDate(dateSlider, true))}</Typography>
 
                     {/* RIGHT SLIDE BUTTON */}
                     <Button variant="contained" sx={{margin: '10px'}}

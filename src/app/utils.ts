@@ -1,4 +1,6 @@
 import {NextRouter} from "next/router";
+import {format} from "date-fns";
+import {fr} from "date-fns/locale";
 
 
 export const hexToRGBA = (hexCode: string, opacity: number) => {
@@ -23,4 +25,21 @@ export const handleURLQueries = (router: NextRouter, path: string | undefined): 
     }
 
     return false
+}
+
+export const uppercaseFirst = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1); 
+}
+
+export const toFrenchDate = (date: Date, dayLetter: boolean = false) => {
+    
+    const dateFormat = dayLetter ?  'EEEE dd LLLL Y' : 'dd LLLL Y';
+    
+    return format(new Date(date), dateFormat, {locale: fr})
+}  
+
+export const startInString = (value: number) => {
+    if(value === 0) return "Aujourd'hui"
+    else if(value < 0) return "Passé"
+    else return value
 }
