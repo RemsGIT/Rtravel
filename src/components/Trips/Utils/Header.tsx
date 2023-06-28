@@ -2,7 +2,7 @@ import {Trip} from "@prisma/client";
 import {Box, Button, Card, CardContent, CardMedia, Typography} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import Icon from "@/components/Icon";
-import {toFrenchDate, uppercaseFirst} from "@/app/utils";
+import {getStartInNumber, startInColor, startInString, toFrenchDate, uppercaseFirst} from "@/app/utils";
 
 const ProfilePicture = styled('img')(({theme}) => ({
     width: 120,
@@ -70,7 +70,7 @@ const Header = ({trip}: { trip: Trip | undefined }) => {
                         </Box>
 
                     </Box>
-                    <Button variant={'contained'} color={'warning'} startIcon={<Icon icon='mdi:timer-sand-full' fontSize={20}/>}>PERIOD</Button>
+                    <Button variant={'contained'} disableRipple={true} color={startInColor(getStartInNumber(trip.start))} startIcon={<Icon icon='mdi:timer-sand-full' fontSize={20}/>}>{startInString(getStartInNumber(trip.start))}</Button>
                 </Box>
             </CardContent>
         </Card>

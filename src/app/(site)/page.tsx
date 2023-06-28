@@ -9,7 +9,7 @@ import LoadingPageSpinner from "@/components/LoadingPageSpinner";
 const Home = () => {
     const router = useRouter()
     const searchParams = useSearchParams();
-    const { data: session, status } = useSession({ required: true})
+    const { data: session, status } = useSession()
     
     useEffect(() => {
         if (/*auth.user && auth.user.role*/status === "authenticated") {
@@ -28,9 +28,7 @@ const Home = () => {
   )
 }
 
-Home.auth = {
-    role: "admin",
-    loading: <LoadingPageSpinner/>
-}
+Home.auth = true;
+
 
 export default Home

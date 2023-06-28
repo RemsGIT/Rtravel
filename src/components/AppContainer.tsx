@@ -5,7 +5,7 @@ import {SettingsConsumer, SettingsProvider} from "@/context/settingsContext";
 import App from "@/components/App";
 import ReactHotToast from "@/theme/libs/react-hot-toast";
 import toast, {Toaster} from "react-hot-toast";
-import {SessionProvider} from "next-auth/react";
+import {ProtectedLayout} from "@/components/layouts/protectedLayouts";
 
 const VerticalLayoutWrapper = styled('div')({
     height: '100%',
@@ -21,13 +21,18 @@ const AppContainer = (props: any) => {
                 {({ settings }) => {
                     return (
                         <Theme settings={settings}>
-                            <VerticalLayoutWrapper>
-                                {/* eslint-disable-next-line react/no-children-prop */}
-                                <App children={props.children} settings={settings} {...props}></App>
-                            </VerticalLayoutWrapper>
-                            <ReactHotToast>
-                                <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
-                            </ReactHotToast>
+                            <ProtectedLayout>
+                                <>
+                                    <VerticalLayoutWrapper>
+                                        {/* eslint-disable-next-line react/no-children-prop */}
+                                        <App children={props.children} settings={settings} {...props}></App>
+                                    </VerticalLayoutWrapper>
+                                    <ReactHotToast>
+                                        <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
+                                    </ReactHotToast>
+                                </>
+                            </ProtectedLayout>
+
                         </Theme>
                     )
                 }}

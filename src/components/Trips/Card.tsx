@@ -3,20 +3,12 @@ import {Trip} from "@prisma/client";
 import {Box, Button, Card as MuiCard, CardMedia, Typography} from "@mui/material";
 import Icon from "@/components/Icon";
 import Link from "next/link";
-import {startInString, toFrenchDate} from "@/app/utils";
+import {startInColor, startInString, toFrenchDate} from "@/app/utils";
 import {differenceInDays} from "date-fns";
 
 const Card = ({trip} : {trip: Trip}) => {
     const startIn = differenceInDays(new Date(trip.start), new Date()) < 0 ? -1 : differenceInDays(new Date(trip.start), new Date())
-    let startInBackgroundColor: any = "success"
-    
-    if(startIn > 30) {
-        startInBackgroundColor = "danger"
-    }
-    else if(startIn > 5) {
-        startInBackgroundColor = "warning"
-    }
-    
+
     return (
         <Link href={`trips/${trip.id}`}>
             <MuiCard sx={{cursor: 'pointer', borderRadius: '20px'}}>
@@ -29,7 +21,7 @@ const Card = ({trip} : {trip: Trip}) => {
                     <Box
                         sx={{position: 'absolute',right: "10px",top: "10px"}}
                     >
-                        <Button variant={"contained"} color={startInBackgroundColor} sx={{px: "7px", py: "4.2px", fontSize: "13px", width: "max-content", minWidth: "30px", height:'25px', fontWeight: "900"}}>{startInString(startIn)}</Button>
+                        <Button variant={"contained"} color={startInColor(startIn)} sx={{px: "7px", py: "4.2px", fontSize: "13px", width: "max-content", minWidth: "30px", height:'25px', fontWeight: "900"}}>{startInString(startIn)}</Button>
                     </Box>
                     <Box
                         sx={{

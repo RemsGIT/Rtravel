@@ -1,6 +1,7 @@
 import {NextRouter} from "next/router";
-import {format} from "date-fns";
+import {differenceInDays, format} from "date-fns";
 import {fr} from "date-fns/locale";
+import {date} from "yup";
 
 
 export const hexToRGBA = (hexCode: string, opacity: number) => {
@@ -38,8 +39,23 @@ export const toFrenchDate = (date: Date, dayLetter: boolean = false) => {
     return format(new Date(date), dateFormat, {locale: fr})
 }  
 
+export const getStartInNumber = (start: Date) => {
+    return differenceInDays(new Date(start), new Date()) < 0 ? -1 : differenceInDays(new Date(start), new Date())
+}
+
 export const startInString = (value: number) => {
     if(value === 0) return "Aujourd'hui"
     else if(value < 0) return "Passé"
     else return value
+}
+export const startInColor = (value: number) => {
+    if(value > 30 || value < 0) {
+        return "error"
+    }
+    else if(value > 5) {
+        return "warning"
+    }
+    else {
+        return "success"
+    }
 }
