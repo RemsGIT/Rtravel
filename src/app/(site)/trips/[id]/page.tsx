@@ -56,7 +56,7 @@ const Trip = ({params} : {params: Params}) => {
     useEffect(() => {
         // Get data for header
         axios
-            .get(`${process.env.NEXT_PUBLIC_APPURL}/api/trips/${params.id}`)
+            .get(`${process.env.NEXT_PUBLIC_APPURL}/api/trip/${params.id}`)
             .then(response => (
                 setTrip(response.data.trip)
             ))

@@ -10,6 +10,7 @@ import clsx from "clsx";
 import {TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator} from "@mui/lab";
 import ArrowEmptyData from "@/components/Utils/ArrowEmptyData";
 import {toFrenchDate, uppercaseFirst} from "@/app/utils";
+import {format} from "date-fns";
 
 // Styled components
 const Timeline = styled(MuiTimeline)<TimelineProps>({
@@ -36,7 +37,7 @@ const filterActivitiesByDay = (activities: Step[], date: Date) => {
     return activities.filter(step => new Date(step.start).toDateString() === date.toDateString())
 }
 
-const ActivitiesSlider = ({start, end, activities}: { start: Date, end: Date, activities: Step[] }) => {
+const ActivitiesSlider = ({start, end, activities, handleOpenCreate}: { start: Date, end: Date, activities: Step[] , handleOpenCreate : (date: Date) => void}) => {
 
     const days = getDaysOfTrip(start, end)
 
@@ -56,7 +57,6 @@ const ActivitiesSlider = ({start, end, activities}: { start: Date, end: Date, ac
         initial: today ? startIndexSlider : 0,
         slideChanged(slider) {
             const index = slider.track.details.rel
-            console.log(days[index])
             setDateSlider(days[index])
             
             setTimeout(() => {
@@ -74,8 +74,6 @@ const ActivitiesSlider = ({start, end, activities}: { start: Date, end: Date, ac
 
     return (
         <KeenSliderWrapper>
-
-
             {loaded && instanceRef.current && (
                 <Box sx={{display: 'flex', justifyContent: 'center', pb: 3}}>
                     {/* LEFT SLIDE BUTTON */}
@@ -136,8 +134,8 @@ const ActivitiesSlider = ({start, end, activities}: { start: Date, end: Date, ac
                                             }}
                                         >
                                             <Typography sx={{mr: 2, fontWeight: 600}}>{step.name}</Typography>
-                                            <Typography variant='caption' sx={{color: 'text.disabled'}}>
-                                                { step.start.toString() }
+                                            <Typography variant={"body1"} sx={{color: 'text.disabled', fontSize: '15px', fontWeight: 'bold'}}>
+                                                { format(new Date(step.start), 'HH:mm') }
                                             </Typography>
                                         </Box>
                                         <Typography variant='body2' sx={{mb: 2}}>
@@ -157,7 +155,7 @@ const ActivitiesSlider = ({start, end, activities}: { start: Date, end: Date, ac
                                         Aucune activité pour ce jour
                                     </Typography>
                                     <ArrowEmptyData width={80} height={80}/>
-                                    <Button variant={"contained"} sx={{mt: 5}}>Ajouter une activité</Button>
+                                    <Button variant={"contained"} sx={{mt: 5}} onClick={() => handleOpenCreate(dateSlider)}>Ajouter une activité</Button>
                                 </Box>
                             )}
                         </Timeline>

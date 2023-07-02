@@ -93,7 +93,7 @@ const CreateTripSidebar = ({open, handleClose}: { open: boolean, handleClose: ()
 
     const onSubmit = async (data: any) => {
         axios
-            .post('/api/trips', {data})
+            .post('/api/trip', {data})
             .then(response => {
                 if(response.data.status === "success") {
                     toast.success(`Voyage ${response.data.trip.name} créé !`)
@@ -147,7 +147,7 @@ const CreateTripSidebar = ({open, handleClose}: { open: boolean, handleClose: ()
                 }}
             >
                 <Typography variant='h6'>
-                    Ajout voyage
+                    Nouveau voyage
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <IconButton size='small' onClick={onClose} sx={{ color: 'text.primary' }}>
@@ -164,7 +164,7 @@ const CreateTripSidebar = ({open, handleClose}: { open: boolean, handleClose: ()
                         <FormControl fullWidth={true} sx={{mb: 6}}>
                             <SelectCity {...register("city")} handleOnChange={handleOnChangeCity} resetText={resetCity}/>
                         </FormControl>
-                        <Box sx={{ mb: 6 }}>
+                        <Box  sx={{ mb: 6 }}>
                             <DatePicker
                                 selectsRange
                                 endDate={endDate}

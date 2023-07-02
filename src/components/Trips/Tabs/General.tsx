@@ -5,6 +5,7 @@ import {Step} from "@prisma/client"
 import WidgetActivities from "@/components/Trips/Widgets/WidgetActivities";
 
 interface DataType {
+    id: string,
     start: Date,
     end: Date,
     steps: Array<Step>
@@ -16,8 +17,9 @@ const General = ({tripId,isLoading, handleLoading} : {tripId: string, isLoading:
     
     useEffect(() => {
         axios
-            .get(`${process.env.NEXT_PUBLIC_APPURL}/api/trips/${tripId}/general`)
+            .get(`${process.env.NEXT_PUBLIC_APPURL}/api/trip/${tripId}/general`)
             .then(response => {
+                console.log(response)
                 setData(response.data.trip)
                 handleLoading(false)
             })
@@ -37,7 +39,7 @@ const General = ({tripId,isLoading, handleLoading} : {tripId: string, isLoading:
                 (
                     <Grid container>
                         <Grid item xs={12} md={6}>
-                            <WidgetActivities activities={data?.steps as Step[]} start={data?.start as Date} end={data?.end as Date} />
+                            <WidgetActivities tripId={data?.id} activities={data?.steps as Step[]} start={data?.start as Date} end={data?.end as Date} />
                         </Grid>
                     </Grid>
                 )

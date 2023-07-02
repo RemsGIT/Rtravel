@@ -16,7 +16,7 @@ export default function Trips() {
     const handleCloseModalCreate = () => setOpenModalCreate(false)
     
     useEffect(() => {
-        axios.get(`${process.env.NEXT_PUBLIC_APPURL}/api/trips`)
+        axios.get(`${process.env.NEXT_PUBLIC_APPURL}/api/trip`)
             .then(r => {
                 setUserTrips(r.data.trips)
             })

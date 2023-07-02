@@ -51,6 +51,7 @@ const SelectCity = ({handleOnChange, resetText}  : {handleOnChange: (value: stri
                 handleOnChange(newValue ?? '')
             }}
             options={predictions}
+            disablePortal={true}
         />
     )
 }

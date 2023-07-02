@@ -6,7 +6,7 @@ const Team = ({tripId, isLoading, handleLoading} : {tripId: string, isLoading: b
 
     useEffect(() => {
         axios
-            .get(`${process.env.NEXT_PUBLIC_APPURL}/api/trips/${tripId}/team`)
+            .get(`${process.env.NEXT_PUBLIC_APPURL}/api/trip/${tripId}/team`)
             .then(response => {
                 console.log(response)
 

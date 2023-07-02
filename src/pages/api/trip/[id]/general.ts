@@ -26,6 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             creatorId: userId
         },
         select: {
+            id: true,
             start: true,
             end: true,
             steps: true
