@@ -14,11 +14,11 @@ const VerticalLayoutWrapper = styled('div')({
 
 
 const AppContainer = (props: any) => {
-    
+
     return (
         <SettingsProvider>
             <SettingsConsumer>
-                {({ settings }) => {
+                {({settings}) => {
                     return (
                         <Theme settings={settings}>
                             <ProtectedLayout>
@@ -28,7 +28,7 @@ const AppContainer = (props: any) => {
                                         <App children={props.children} settings={settings} {...props}></App>
                                     </VerticalLayoutWrapper>
                                     <ReactHotToast>
-                                        <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
+                                        <Toaster  position={settings.toastPosition} toastOptions={{className: 'react-hot-toast'}}/>
                                     </ReactHotToast>
                                 </>
                             </ProtectedLayout>
@@ -42,7 +42,6 @@ const AppContainer = (props: any) => {
     )
 
 }
-
 
 
 export default AppContainer

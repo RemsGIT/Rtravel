@@ -46,7 +46,7 @@ export const getStartInNumber = (start: Date) => {
 export const startInString = (value: number) => {
     if(value === 0) return "Aujourd'hui"
     else if(value < 0) return "Passé"
-    else return value
+    else return value + ' ' + (value > 0 ? 'jours' : 'jour')
 }
 export const startInColor = (value: number) => {
     if(value > 30 || value < 0) {

@@ -1,7 +1,6 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
-import {Step} from "@prisma/client";
 import prisma from "../../../../lib/prisma";
 
 
