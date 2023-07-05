@@ -63,9 +63,9 @@ const Header = ({trip}: { trip: Trip | undefined }) => {
                                 <Icon icon='mdi:map-marker-outline' />
                                 <Typography sx={{ ml: 1, color: 'text.secondary', fontWeight: 600 }}>{trip.city}</Typography>
                             </Box>
-                            <Box sx={{ mr: 5, display: 'flex', alignItems: 'center', '& svg': { mr: 1, color: 'text.secondary' } }}>
-                                <Icon icon='mdi:airplane-clock' />
-                                <Typography sx={{ ml: 1, color: 'text.secondary', fontWeight: 600 }}> Départ le {uppercaseFirst(toFrenchDate(trip.start, true))}</Typography>
+                            <Box sx={{ mr: 5, display: 'flex', alignItems: 'center', '& svg': { mr: 1, color: 'text.secondary' }, mt: 1 }}>
+                                <Icon icon='mdi:clock-outline' />
+                                <Typography sx={{ pt:1, ml: 1, color: 'text.secondary', fontWeight: 600 }}> Départ le {uppercaseFirst(toFrenchDate(trip.start, true))}</Typography>
                             </Box>
                         </Box>
 

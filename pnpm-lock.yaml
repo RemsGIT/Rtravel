@@ -22,6 +22,9 @@ dependencies:
   '@mui/utils':
     specifier: ^5.12.3
     version: 5.12.3(react@18.2.0)
+  '@mui/x-data-grid':
+    specifier: 6.0.3
+    version: 6.0.3(@mui/material@5.12.3)(@mui/system@5.13.2)(react-dom@18.2.0)(react@18.2.0)
   '@mui/x-date-pickers':
     specifier: ^6.5.0
     version: 6.5.0(@emotion/react@11.10.8)(@emotion/styled@11.10.8)(@mui/base@5.0.0-beta.2)(@mui/material@5.12.3)(@mui/system@5.13.2)(dayjs@1.11.7)(react-dom@18.2.0)(react@18.2.0)
@@ -703,6 +706,26 @@ packages:
       prop-types: 15.8.1
       react: 18.2.0
       react-is: 18.2.0
+    dev: false
+
+  /@mui/x-data-grid@6.0.3(@mui/material@5.12.3)(@mui/system@5.13.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-wcv5O+p25ouvB100FwVPLTLBAmvoP1SaTtOxpCYbfVSLMKkP4bbynA9a+enWtnuvcC8k5qvI75Tx5nRVbFUykA==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@mui/material': ^5.4.1
+      '@mui/system': ^5.4.1
+      react: ^17.0.2 || ^18.0.0
+      react-dom: ^17.0.2 || ^18.0.0
+    dependencies:
+      '@babel/runtime': 7.21.5
+      '@mui/material': 5.12.3(@emotion/react@11.10.8)(@emotion/styled@11.10.8)(@types/react@18.2.5)(react-dom@18.2.0)(react@18.2.0)
+      '@mui/system': 5.13.2(@emotion/react@11.10.8)(@emotion/styled@11.10.8)(@types/react@18.2.5)(react@18.2.0)
+      '@mui/utils': 5.13.1(react@18.2.0)
+      clsx: 1.2.1
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      reselect: 4.1.8
     dev: false
 
   /@mui/x-date-pickers@6.5.0(@emotion/react@11.10.8)(@emotion/styled@11.10.8)(@mui/base@5.0.0-beta.2)(@mui/material@5.12.3)(@mui/system@5.13.2)(dayjs@1.11.7)(react-dom@18.2.0)(react@18.2.0):
@@ -3321,6 +3344,10 @@ packages:
       call-bind: 1.0.2
       define-properties: 1.2.0
       functions-have-names: 1.2.3
+    dev: false
+
+  /reselect@4.1.8:
+    resolution: {integrity: sha512-ab9EmR80F/zQTMNeneUr4cv+jSwPJgIlvEmVwLerwrWVbpLlBuls9XHzIeTFy4cegU2NHBp3va0LKOzU5qFEYQ==}
     dev: false
 
   /resolve-from@4.0.0:

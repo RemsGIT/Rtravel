@@ -48,8 +48,5 @@
     "@types/bcrypt": "^5.0.0",
     "@types/react-datepicker": "^4.11.2",
     "prisma": "^4.14.0"
-  },
-  "resolutions": {
-    "@mui/x-data-grid/@mui/system": "5.12.1"
   }
 }

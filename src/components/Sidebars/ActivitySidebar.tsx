@@ -64,7 +64,7 @@ const ActivitySidebar = ({open,handleClose,handleSubmitForm,defaultDate = null,s
         return (
             <Fragment>
                 <Button size='large' type='submit' variant='contained' sx={{mr: 4}}>
-                    Créer
+                    {defaultActivity !== undefined ? "Modifier" : "Créer"}
                 </Button>
                 <Button size='large' variant='outlined' color='secondary' onClick={onClose}>
                     Annuler
