@@ -27,7 +27,7 @@ interface PickerProps {
     end: Date
 }
 
-const CreateTripSidebar = ({open, handleClose}: { open: boolean, handleClose: () => void }) => {
+const TripSidebar = ({open, handleClose}: { open: boolean, handleClose: () => void }) => {
     const DEFAULT_START = new Date();
     const DEFAULT_END = addDays(new Date(), 3)
 
@@ -197,4 +197,4 @@ const CreateTripSidebar = ({open, handleClose}: { open: boolean, handleClose: ()
     )
 }
 
-export default CreateTripSidebar
+export default TripSidebar

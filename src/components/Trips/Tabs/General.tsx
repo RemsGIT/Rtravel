@@ -4,6 +4,7 @@ import axios from "axios";
 import {Step} from "@prisma/client"
 import WidgetActivities from "@/components/Trips/Widgets/WidgetActivities";
 import toast from "react-hot-toast";
+import {da} from "date-fns/locale";
 
 interface DataType {
     id: string,
@@ -45,6 +46,32 @@ const General = ({
                         newData.steps = [...newData.steps, response.data.activity];
                         setTripData(newData)
 
+                    }
+                })
+        }
+    }
+    
+    const updateActivityDb = (data: any) => {
+        if(data) {
+            axios
+                .put(`/api/activity/${data.id}`, data)
+                .then((response) => {
+                    if(response.status === 200) {
+                        toast.success(`L'activité ${response.data.name} a été modifiée`)
+                        
+                        const newData: any = {...tripData}
+                        
+                        const updatedActivities = [...newData.steps]
+                        
+                        const indexToUpdate = newData.steps.findIndex((activity: any) => activity.id === response.data.id)
+
+                        console.log(indexToUpdate)
+                        if(indexToUpdate !== -1) {
+                            updatedActivities[indexToUpdate] = response.data
+                            
+                            newData.steps = updatedActivities
+                            setTripData(newData)
+                        }
                     }
                 })
         }
@@ -91,6 +118,7 @@ const General = ({
                                 start={tripData?.start as Date}
                                 end={tripData?.end as Date}
                                 onSaveActivity={saveActivityToDb}
+                                onUpdateActivity={updateActivityDb}
                                 onDeleteActivity={deleteActivityDb}
                             />
                         </Grid>

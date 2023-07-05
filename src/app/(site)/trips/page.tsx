@@ -1,5 +1,5 @@
 "use client"
-import CreateTripSidebar from "@/components/Sidebars/CreateTripSidebar";
+import TripSidebar from "@/components/Sidebars/TripSidebar";
 import {useEffect, useState} from "react";
 import {Button} from "@mui/material";
 import axios from "axios";
@@ -24,7 +24,7 @@ export default function Trips() {
 
     return (
         <>
-            <CreateTripSidebar open={openModalCreate} handleClose={handleCloseModalCreate}/>
+            <TripSidebar open={openModalCreate} handleClose={handleCloseModalCreate}/>
             
             <Button variant={"contained"} color={"primary"} onClick={() => setOpenModalCreate(true)}>Nouveau voyage</Button>
 

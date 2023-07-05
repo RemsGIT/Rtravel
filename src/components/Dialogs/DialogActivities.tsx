@@ -22,9 +22,9 @@ const DialogActivities = ({
                               handleClose,
                               trip,
                               onClickOpenCreate,
+                              onClickOpenUpdate,
                               onDeleteActivity,
-                              handleSubmitFormNewActivity,
-                          }: { open: boolean, handleClose: () => void, trip: DialogActivitiesType, onClickOpenCreate: () => void, handleSubmitFormNewActivity: (data: any) => void , onDeleteActivity: (id: string ) => void}) => {
+                          }: { open: boolean, handleClose: () => void, trip: DialogActivitiesType, onClickOpenCreate: () => void,onClickOpenUpdate: (id: string) => void, onDeleteActivity: (id: string ) => void}) => {
     return (
         <Dialog fullScreen onClose={handleClose} aria-labelledby='full-screen-dialog-title' open={open}>
             <Toolbar sx={{backgroundColor: 'primary.main'}}>
@@ -45,7 +45,7 @@ const DialogActivities = ({
                 </Button>
             </Toolbar>
             <DialogContent>
-                <TableTripActivities activities={trip.activities} onDeleteActivity={onDeleteActivity}/>
+                <TableTripActivities activities={trip.activities} onClickUpdateActivity={onClickOpenUpdate} onClickDeleteActivity={onDeleteActivity}/>
             </DialogContent>
         </Dialog>
     )

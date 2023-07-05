@@ -2,9 +2,9 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import {ChangeEvent, useEffect, useState} from "react";
 
-const SelectCity = ({handleOnChange, resetText}  : {handleOnChange: (value: string) => void, resetText: boolean}) => {
+const SelectCity = ({handleOnChange, resetText, defaultCity = ''}  : {handleOnChange: (value: string) => void, resetText: boolean, defaultCity: string}) => {
     const [predictions, setPredictions] = useState<string[]>([]);
-    const [value, setValue] = useState<string | null>('');
+    const [value, setValue] = useState<string | null>(defaultCity);
 
     const searchDestination = (textTyped: string) => {
 
@@ -34,7 +34,11 @@ const SelectCity = ({handleOnChange, resetText}  : {handleOnChange: (value: stri
     }
     
     useEffect(() => {
-        if(resetText) {
+        setValue(defaultCity)
+    }, [defaultCity])
+    
+    useEffect(() => {
+        if(resetText && defaultCity === '') {
             setValue("")
         }
     }, [resetText])

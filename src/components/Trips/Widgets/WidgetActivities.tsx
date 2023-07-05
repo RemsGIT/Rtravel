@@ -4,18 +4,21 @@ import {Card, CardContent, CardHeader} from "@mui/material";
 import Icon from "@/components/Icon";
 import OptionsMenuCard from "@/components/Utils/OptionsMenuCard";
 import ActivitiesSlider from "@/components/Trips/Utils/ActivitiesSlider";
-import CreateActivitySidebar from "@/components/Sidebars/CreateActivitySidebar";
+import ActivitySidebar from "@/components/Sidebars/ActivitySidebar";
 import DialogActivities from "@/components/Dialogs/DialogActivities";
+import {da} from "date-fns/locale";
 
 interface Params {
     id: string
 }
 
-const WidgetActivities = ({tripId, activities, start, end, onSaveActivity, onDeleteActivity} : {tripId: string | undefined, activities: Step[], start: Date, end: Date, onSaveActivity: (data: any) => void, onDeleteActivity: (id: string) => void}) => {
+const WidgetActivities = ({tripId, activities, start, end, onSaveActivity, onUpdateActivity, onDeleteActivity} : {tripId: string | undefined, activities: Step[], start: Date, end: Date, onSaveActivity: (data: any) => void,onUpdateActivity: (data: any) => void, onDeleteActivity: (id: string) => void}) => {
     const [openModalActivities, setOpenModalActivities] = useState<boolean>(false);
     const [openModalCreate, setOpenModalCreate] = useState<boolean>(false);
 
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    
+    const [activityToUpdate, setActivityToUpdate] = useState<Step | undefined>(undefined);
     
     const ModalActivitiesData = {
         tripId,
@@ -25,7 +28,13 @@ const WidgetActivities = ({tripId, activities, start, end, onSaveActivity, onDel
     }
 
     const saveActivity = (data: any) => {
-        onSaveActivity(data)
+        if(data.edit_mode) {
+            onUpdateActivity(data)
+        }
+        else {
+            onSaveActivity(data)
+        }
+        
         setOpenModalCreate(false)
     }
     
@@ -34,7 +43,13 @@ const WidgetActivities = ({tripId, activities, start, end, onSaveActivity, onDel
     }
     
     const onClickOpenModal = (date: Date) => {
+        setActivityToUpdate(undefined)
         setSelectedDate(date)
+        setOpenModalCreate(true)
+    }
+    
+    const onClickOpenModalForUpdate = (id: string) => {
+        setActivityToUpdate(activities.find(activity => activity.id === id))
         setOpenModalCreate(true)
     }
 
@@ -65,8 +80,8 @@ const WidgetActivities = ({tripId, activities, start, end, onSaveActivity, onDel
                 </CardContent>
             </Card>
             
-            <CreateActivitySidebar open={openModalCreate} handleClose={() => setOpenModalCreate(false)}  handleSubmitForm={saveActivity} defaultDate={selectedDate} start={start} end={end}/>
-            <DialogActivities open={openModalActivities} handleClose={() => setOpenModalActivities(false)} trip={ModalActivitiesData} onClickOpenCreate={() => setOpenModalCreate(true)} handleSubmitFormNewActivity={saveActivity} onDeleteActivity={deleteActivity}></DialogActivities>
+            <ActivitySidebar open={openModalCreate} handleClose={() => setOpenModalCreate(false)} handleSubmitForm={saveActivity} defaultDate={selectedDate} start={start} end={end} defaultActivity={activityToUpdate}/>
+            <DialogActivities open={openModalActivities} handleClose={() => setOpenModalActivities(false)} trip={ModalActivitiesData} onClickOpenCreate={() => {setActivityToUpdate(undefined);setOpenModalCreate(true)}} onClickOpenUpdate={onClickOpenModalForUpdate} onDeleteActivity={deleteActivity}></DialogActivities>
         </>
 
     )

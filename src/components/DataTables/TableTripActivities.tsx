@@ -5,8 +5,6 @@ import Icon from "@/components/Icon";
 import {toFrenchDate} from "@/app/utils";
 import {format} from "date-fns";
 import DialogConfirmation from "@/components/Dialogs/DialogConfirmation";
-import axios from "axios";
-import toast from "react-hot-toast";
 
 interface ToolbarProps {
     value: string
@@ -75,7 +73,7 @@ const Toolbar = (props: ToolbarProps) => {
     )
 }
 
-const TableTripActivities = ({activities, onDeleteActivity}: { activities: Array<any>, onDeleteActivity: (id: string) => void}) => {
+const TableTripActivities = ({activities, onClickUpdateActivity, onClickDeleteActivity}: { activities: Array<any>,onClickUpdateActivity: (id: string) => void, onClickDeleteActivity: (id: string) => void}) => {
 
     const [data, setData] = useState<DataGridRowType[]>(activities)
     const [searchText, setSearchText] = useState<string>('')
@@ -181,7 +179,7 @@ const TableTripActivities = ({activities, onDeleteActivity}: { activities: Array
                     <IconButton
                         color={"primary"}
                         onClick={() => {
-                            console.log("Édition de l'activité " + params.row.id)
+                            onClickUpdateActivity(params.row.id)
                         }}
                     >
                         <Icon icon='mdi:edit'/>
@@ -202,7 +200,7 @@ const TableTripActivities = ({activities, onDeleteActivity}: { activities: Array
 
     // delete
     const clickDeleteActivity = () => {
-        onDeleteActivity(IDdeleteActivity)
+        onClickDeleteActivity(IDdeleteActivity)
         setOpenModalConfirmation(false)
         setIDdeleteActivity("none")
     }
