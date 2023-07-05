@@ -103,6 +103,9 @@ dependencies:
   typescript:
     specifier: 5.0.4
     version: 5.0.4
+  workbox-window:
+    specifier: ^7.0.0
+    version: 7.0.0
   yup:
     specifier: ^1.1.1
     version: 1.1.1
@@ -6309,6 +6312,10 @@ packages:
     resolution: {integrity: sha512-GDtFRF7Yg3DD859PMbPAYPeJyg5gJYXuBQAC+wyrWuuXgpfoOrIQIvFRZnQ7+czTIQjIr1DhLEGFzZanAT/3bQ==}
     dev: false
 
+  /workbox-core@7.0.0:
+    resolution: {integrity: sha512-81JkAAZtfVP8darBpfRTovHg8DGAVrKFgHpOArZbdFd78VqHr5Iw65f2guwjE2NlCFbPFDoez3D3/6ZvhI/rwQ==}
+    dev: false
+
   /workbox-expiration@6.6.0:
     resolution: {integrity: sha512-baplYXcDHbe8vAo7GYvyAmlS4f6998Jff513L4XvlzAOxcl8F620O91guoJ5EOf5qeXG4cGdNZHkkVAPouFCpw==}
     dependencies:
@@ -6401,6 +6408,13 @@ packages:
     dependencies:
       '@types/trusted-types': 2.0.3
       workbox-core: 6.6.0
+    dev: false
+
+  /workbox-window@7.0.0:
+    resolution: {integrity: sha512-j7P/bsAWE/a7sxqTzXo3P2ALb1reTfZdvVp6OJ/uLr/C2kZAMvjeWGm8V4htQhor7DOvYg0sSbFN2+flT5U0qA==}
+    dependencies:
+      '@types/trusted-types': 2.0.3
+      workbox-core: 7.0.0
     dev: false
 
   /wrappy@1.0.2:

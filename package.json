@@ -43,6 +43,7 @@
     "sass": "^1.62.1",
     "swr": "^2.1.5",
     "typescript": "5.0.4",
+    "workbox-window": "^7.0.0",
     "yup": "^1.1.1"
   },
   "devDependencies": {
