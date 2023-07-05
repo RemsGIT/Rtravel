@@ -1,17 +1,15 @@
 "use client"
 // ** MUI Imports
-import { styled } from '@mui/material/styles'
+import {styled, useTheme} from '@mui/material/styles'
 import Box, { BoxProps } from '@mui/material/Box'
-import AppContainer from "@/components/AppContainer";
 import {SettingsConsumer, SettingsProvider} from "@/context/settingsContext";
 import Theme from "@/theme/Theme";
-import App from "@/components/App";
 import {AuthProvider} from "@/context/AuthContext";
 import ReactHotToast from "@/theme/libs/react-hot-toast";
 import {Toaster} from "react-hot-toast";
 import {useEffect, useState} from "react";
 import LoadingPageSpinner from "@/components/LoadingPageSpinner";
-import Head from "next/head";
+import AuthDetectorMode from "@/app/(auth)/AuthDetectorMode";
 
 // Styled component for Blank Layout component
 const BlankLayoutWrapper = styled(Box)<BoxProps>(({ theme }) => ({
@@ -36,6 +34,7 @@ const BlankLayoutWrapper = styled(Box)<BoxProps>(({ theme }) => ({
 }))
 
 export default function AuthLayout({children}: {children: React.ReactNode}) {
+    const theme = useTheme();
     const [isLoading, setisLoading] = useState<Boolean>(true)
 
     useEffect(() => {
@@ -49,13 +48,9 @@ export default function AuthLayout({children}: {children: React.ReactNode}) {
                     {({ settings }) => {
                         return (
                             <Theme settings={settings}>
-                                <style>{`
-                                  :root {
-                                    --background-color: ${settings.mode === 'light' ? '#F1F0F5 !important' : '#393D55 !important' };
-                                  }
-                                `}</style>
                                 {!isLoading ? (
                                     <>
+                                        <AuthDetectorMode />
                                         <BlankLayoutWrapper className='layout-wrapper'>
                                             <Box className='app-content' sx={{ minHeight: '100vh', overflowX: 'hidden', position: 'relative' }}>
                                                 {/* eslint-disable-next-line react/no-children-prop */}
