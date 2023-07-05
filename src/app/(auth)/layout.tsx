@@ -11,6 +11,7 @@ import ReactHotToast from "@/theme/libs/react-hot-toast";
 import {Toaster} from "react-hot-toast";
 import {useEffect, useState} from "react";
 import LoadingPageSpinner from "@/components/LoadingPageSpinner";
+import Head from "next/head";
 
 // Styled component for Blank Layout component
 const BlankLayoutWrapper = styled(Box)<BoxProps>(({ theme }) => ({
@@ -48,6 +49,11 @@ export default function AuthLayout({children}: {children: React.ReactNode}) {
                     {({ settings }) => {
                         return (
                             <Theme settings={settings}>
+                                <style>{`
+                                  :root {
+                                    --background-color: ${settings.mode === 'light' ? '#F1F0F5 !important' : '#393D55 !important' };
+                                  }
+                                `}</style>
                                 {!isLoading ? (
                                     <>
                                         <BlankLayoutWrapper className='layout-wrapper'>

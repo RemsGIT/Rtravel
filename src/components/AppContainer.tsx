@@ -21,6 +21,11 @@ const AppContainer = (props: any) => {
                 {({settings}) => {
                     return (
                         <Theme settings={settings}>
+                            <style>{`
+                                  :root {
+                                    --background-color: ${settings.mode === 'light' ? '#F1F0F5 !important' : '#393D55 !important' };
+                                  }
+                            `}</style>
                             <ProtectedLayout>
                                 <>
                                     <VerticalLayoutWrapper>
