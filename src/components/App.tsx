@@ -1,12 +1,13 @@
 import Menu from "@/components/Menu/Menu";
 import AppBar from "@/components/Menu/AppBar/AppBar";
 import AppBarContent from "@/components/Menu/AppBar/AppBarContent";
-import {styled, Theme} from "@mui/material/styles";
+import {styled, Theme, useTheme} from "@mui/material/styles";
 import {Box, BoxProps, useMediaQuery} from "@mui/material";
 import themeConfig from "@/theme/ThemeConfig";
 import {useEffect, useState} from "react";
 import routes from "@/configs/routes";
 import LoadingPageSpinner from "@/components/LoadingPageSpinner";
+import {Mode} from "@/types/LayoutTypes";
 
 const MainContentWrapper = styled(Box)<BoxProps>({
     flexGrow: 1,
@@ -28,6 +29,7 @@ const ContentWrapper = styled('main')(({theme}) => ({
 }))
 
 const App = (props: any) => {
+    const theme = useTheme()
 
     const [isLoading, setisLoading] = useState<Boolean>(true)
 
@@ -38,7 +40,7 @@ const App = (props: any) => {
     const contentWidth = 'boxed'
 
     const hidden = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'))
-
+    
     
     const toggleNavVisibility = () => {
         setNavVisible(!navVisible)
@@ -47,6 +49,17 @@ const App = (props: any) => {
     useEffect(() => {
         setisLoading(false)
     }, [props.settings.mode])
+    
+    useEffect(() => {
+        const metaElement = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement;
+        // Update background color for PWA
+        if (theme.palette.mode === 'light') {
+            // PWA background color
+            metaElement.content = theme.palette.customColors.lightBg;
+        } else {
+            metaElement.content = theme.palette.customColors.darkBg
+        }
+    }, [theme])
     
     return (
         <>
