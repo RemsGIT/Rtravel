@@ -228,11 +228,15 @@ const TableTripActivities = ({activities, onClickUpdateActivity, onClickDeleteAc
                 }}
                 localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
             />
+            {/*@ts-ignore*/}
             <DialogConfirmation
                 open={openModalConfirmation}
                 handleNo={() => setOpenModalConfirmation(false)}
                 handleYes={clickDeleteActivity}
-            />
+                title={"Supprimer une activité"}
+                message={"Voulez-vous vraiment supprimer cette activité ? Cette action est irréversible"}
+            >
+            </DialogConfirmation>
         </>
     )
 }

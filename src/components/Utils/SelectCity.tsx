@@ -2,7 +2,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import {ChangeEvent, useEffect, useState} from "react";
 
-const SelectCity = ({handleOnChange, resetText, defaultCity = ''}  : {handleOnChange: (value: string) => void, resetText: boolean, defaultCity: string}) => {
+const SelectCity = ({handleOnChange, resetText, defaultCity = ''}  : {handleOnChange: (value: string) => void, resetText: boolean, defaultCity?: string}) => {
     const [predictions, setPredictions] = useState<string[]>([]);
     const [value, setValue] = useState<string | null>(defaultCity);
 
