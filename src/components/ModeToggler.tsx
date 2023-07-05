@@ -22,6 +22,7 @@ const ModeToggler = (props: Props) => {
     }
 
     const handleModeToggle = () => {
+        //TODO changer le background de la pwa en fonction ici
         if (settings.mode === 'light') {
             handleModeChange('dark' as Mode)
         } else {
