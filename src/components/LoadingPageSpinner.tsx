@@ -14,7 +14,7 @@ const LoadingPageSpinner = ({ sx }: {sx?: BoxProps['sx'] }) => {
                 alignItems: 'center',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                backgroundColor: theme.palette.customColors.darkBg,
+                backgroundColor: theme.palette.customColors.bodyBg,
                 ...sx
             }}
         >
