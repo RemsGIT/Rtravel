@@ -94,6 +94,7 @@ const ActivitiesSlider = ({start, end, activities, handleOpenCreate}: { start: D
                     <Typography sx={{
                         display: 'flex',
                         alignItems: 'center',
+                        textAlign: 'center',
                         textTransform: 'capitalize',
                         userSelect: 'none'
                     }}>{uppercaseFirst(toFrenchDate(dateSlider, true))}</Typography>
