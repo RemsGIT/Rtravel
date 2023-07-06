@@ -1,11 +1,23 @@
 import {Controller, useForm} from "react-hook-form";
 import {forwardRef, Fragment, useEffect, useState} from "react";
-import {Box, Button, Drawer, FormControl, IconButton, InputLabel, Select, TextField, Typography} from "@mui/material";
+import {
+    Box,
+    Button,
+    Drawer,
+    FormControl,
+    IconButton,
+    InputLabel,
+    Select,
+    TextField,
+    Typography,
+    useMediaQuery
+} from "@mui/material";
 import Icon from "@/components/Icon";
 import SelectCity from "@/components/Utils/SelectCity";
 import MenuItem from "@mui/material/MenuItem";
 import DatePicker from "react-datepicker";
 import DatePickerWrapper from "@/theme/libs/react-datepicker";
+import {Theme} from "@mui/material/styles";
 
 interface PickerProps {
     label?: string
@@ -30,6 +42,8 @@ const ActivitySidebar = ({open,handleClose,handleSubmitForm,defaultDate = null,s
     const [dateTime, setDateTime] = useState<Date>(new Date())
     const [nameValue, setNameValue] = useState<string>("");
 
+    const mobileMode = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
+    
     const {register, handleSubmit, reset, setValue, getValues, watch, control} = useForm({
         defaultValues: {
             id: "",
@@ -189,6 +203,7 @@ const ActivitySidebar = ({open,handleClose,handleSubmitForm,defaultDate = null,s
                                 maxDate={end != null ? new Date(end) : new Date()}
                                 dateFormat='MM/dd/yyyy h:mm aa'
                                 onChange={(date: Date) => setDateTime(date)}
+                                withPortal={mobileMode}
                                 customInput={<CustomInput label='Date & heure'/>}
                             />
                         </FormControl>

@@ -1,12 +1,10 @@
 import {
     Button,
-    DialogActions,
-    DialogContent,
     Box, Drawer,
     FormControl,
     InputLabel,
     Select,
-    TextField, Typography, IconButton
+    TextField, Typography, IconButton, useMediaQuery
 } from "@mui/material";
 import {useForm} from "react-hook-form";
 import MenuItem from "@mui/material/MenuItem";
@@ -19,6 +17,7 @@ import {fr} from "date-fns/locale";
 import axios from "axios";
 import toast from "react-hot-toast";
 import SelectCity from "@/components/Utils/SelectCity";
+import {Theme} from "@mui/material/styles";
 
 
 interface PickerProps {
@@ -37,8 +36,11 @@ const TripSidebar = ({open, handleClose}: { open: boolean, handleClose: () => vo
     
     const [resetCity, setResetCity] = useState<boolean>(false);
     const [vehicle, setVehicle] = useState<string|String>("");
-    
-    const {register, handleSubmit, reset, setValue, getValues} = useForm({
+
+    const mobileMode = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
+
+
+    const {register, handleSubmit, reset, setValue} = useForm({
         defaultValues: {
             name: "",
             city: "",
@@ -164,7 +166,7 @@ const TripSidebar = ({open, handleClose}: { open: boolean, handleClose: () => vo
                         <FormControl fullWidth={true} sx={{mb: 6}}>
                             <SelectCity {...register("city")} handleOnChange={handleOnChangeCity} resetText={resetCity}/>
                         </FormControl>
-                        <Box  sx={{ mb: 6 }}>
+                        <Box sx={{ mb: 6 }}>
                             <DatePicker
                                 selectsRange
                                 endDate={endDate}
@@ -173,6 +175,7 @@ const TripSidebar = ({open, handleClose}: { open: boolean, handleClose: () => vo
                                 id='date-range-picker'
                                 onChange={handleOnChangeDatePicker}
                                 shouldCloseOnSelect={false}
+                                withPortal={mobileMode}
                                 customInput={
                                     <CustomInput label='Dates' start={startDate as Date} end={endDate as Date} />
                                 }
