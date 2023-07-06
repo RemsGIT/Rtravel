@@ -127,8 +127,7 @@ const TripSidebar = ({open, handleClose}: { open: boolean, handleClose: () => vo
         let value = `${startDate !== null ? startDate : ''}${endDate !== null ? endDate : ''}`
         
         value = value.length === 0 ? 'Choisir une date' : value;
-        return <TextField inputRef={ref} {...props} value={value} sx={{width: '100%'}}/>
-
+        return <TextField inputRef={ref} {...props} value={value} sx={{width: '100%'}}  InputProps={{readOnly: true}}/>
     })
 
     return (
@@ -177,7 +176,7 @@ const TripSidebar = ({open, handleClose}: { open: boolean, handleClose: () => vo
                                 shouldCloseOnSelect={false}
                                 withPortal={mobileMode}
                                 customInput={
-                                    <CustomInput label='Dates' start={startDate as Date} end={endDate as Date} />
+                                    <CustomInput label='Dates' start={startDate as Date} end={endDate as Date}  />
                                 }
                             />
                         </Box>

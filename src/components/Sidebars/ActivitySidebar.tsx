@@ -30,8 +30,7 @@ const CustomInput = forwardRef(({...props}: PickerProps, ref) => {
     const {label, readOnly} = props
 
     return (
-        <TextField inputRef={ref} {...props} label={label || ''} {...(readOnly && {inputProps: {readOnly: true}})}
-                   sx={{width: '100%'}}/>
+        <TextField inputRef={ref} {...props} label={label || ''} InputProps={{readOnly: true}} sx={{width: '100%'}} />
     )
 })
 
@@ -124,7 +123,7 @@ const ActivitySidebar = ({open,handleClose,handleSubmitForm,defaultDate = null,s
             open={open}
             onClose={handleClose}
             ModalProps={{keepMounted: true}}
-            sx={{'& .MuiDrawer-paper': {width: ['100%', 450]}, zIndex: 2000}}
+            sx={{'& .MuiDrawer-paper': {width: ['100%', 500]}, zIndex: 2000}}
         >
             <Box
                 className='sidebar-header'
