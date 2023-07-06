@@ -4,6 +4,7 @@ import MuiSwipeableDrawer, { SwipeableDrawerProps } from '@mui/material/Swipeabl
 
 // ** Type Import
 import { LayoutProps} from "@/types/LayoutTypes";
+import {useSettings} from "@/hooks/useSettings";
 
 interface Props {
     navWidth: number
@@ -12,7 +13,6 @@ interface Props {
     collapsedNavWidth: number
     hidden: LayoutProps['hidden']
     navigationBorderWidth: number
-    settings: LayoutProps['settings']
     children: LayoutProps['children']
     setNavHover: (values: boolean) => void
     setNavVisible: (value: boolean) => void
@@ -43,7 +43,6 @@ const Drawer = (props: Props) => {
         children,
         navHover,
         navWidth,
-        settings,
         navVisible,
         setNavHover,
         navMenuProps,
@@ -53,7 +52,7 @@ const Drawer = (props: Props) => {
     } = props
 
     const theme = useTheme()
-
+    const { settings } = useSettings()
 
     // ** Vars
     const { skin, navCollapsed, mode } = settings
