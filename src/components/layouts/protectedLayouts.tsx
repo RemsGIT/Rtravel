@@ -28,11 +28,7 @@ export const ProtectedLayout = ({ children }: Props): JSX.Element => {
   if(unAuthorized) {
     router.push('/login')
   }
-
-  console.log(theme.palette.mode)
   
-  
-
   // if the user is authorized, render the page
   // otherwise, render nothing while the router redirects him to the login page
   return authorized ? <div>{children}</div> : <LoadingPageSpinner />;
