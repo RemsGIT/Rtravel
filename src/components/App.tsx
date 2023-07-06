@@ -48,7 +48,7 @@ const App = (props: any) => {
 
     useEffect(() => {
         setisLoading(false)
-    }, [props.settings.mode])
+    }, [theme.palette.mode])
     
     useEffect(() => {
         const metaElement = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement;
