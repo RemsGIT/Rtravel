@@ -5,7 +5,7 @@ import {styled, useTheme} from "@mui/material/styles";
 import MuiAppBar, { AppBarProps } from '@mui/material/AppBar'
 import MuiToolbar, { ToolbarProps } from '@mui/material/Toolbar'
 import {hexToRGBA} from "@/app/utils";
-import {useMediaQuery} from "@mui/material";
+import {useScrollTrigger} from "@mui/material";
 import {useSettings} from "@/hooks/useSettings";
 
 
@@ -47,10 +47,21 @@ const LayoutAppBar = (props: Props) => {
     
     // HOOKS
     const theme = useTheme()
+    const scrollTrigger = useScrollTrigger({ threshold: 0, disableHysteresis: true })
     const { settings, saveSettings } = useSettings()
     
     // ** Vars
     const { skin, appBar, appBarBlur, contentWidth } = settings
+
+    const appBarFixedStyles = () => {
+        return {
+            px: `${theme.spacing(5)} !important`,
+            boxShadow: skin === 'bordered' ? 0 : 3,
+            ...(appBarBlur && { backdropFilter: 'blur(8px)' }),
+            backgroundColor: hexToRGBA(theme.palette.background.paper, appBarBlur ? 0.85 : 1),
+            ...(skin === 'bordered' && { border: `1px solid ${theme.palette.divider}`, borderTopWidth: 0 })
+        }
+    }
     
     if (appBar === 'hidden') {
         return null
@@ -75,6 +86,7 @@ const LayoutAppBar = (props: Props) => {
             <Toolbar
                 className='navbar-content-container'
                 sx={{
+                    ...(appBar === 'fixed' && scrollTrigger && { ...appBarFixedStyles() }),
                     ...(contentWidth === 'boxed' && {
                         '@media (min-width:1440px)': { maxWidth: `calc(1440px - ${theme.spacing(6)} * 2)` }
                     })
