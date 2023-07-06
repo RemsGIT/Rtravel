@@ -142,12 +142,14 @@ const ActivitiesSlider = ({start, end, activities, handleOpenCreate}: { start: D
                                         <Typography variant='body2' sx={{mb: 2}}>
                                             {step.description}
                                         </Typography>
+                                        {/*
                                         <Box sx={{display: 'flex', alignItems: 'center'}}>
                                             <img width={24} height={24} alt='' src=''/>
                                             <Typography variant='subtitle2' sx={{ml: 2, fontWeight: 600}}>
                                                 invoice.pdf
                                             </Typography>
                                         </Box>
+                                        */}
                                     </TimelineContent>
                                 </TimelineItem>
                             )) : (

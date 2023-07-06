@@ -1,9 +1,14 @@
 import Box from "@mui/material/Box";
+import {useTheme} from "@mui/material/styles";
 
 const ArrowEmptyData = ({width, height}: {width?: number|null,height?: number|null}) => {
+    const theme = useTheme();
+    
+    const svgColor = theme.palette.mode === 'light' ? "#000" : '#fff';
+    
     return (
         <Box sx={{transform: 'rotate(105deg))'}} className={"ArrowEmptyData"}>
-            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+            <svg fill={svgColor} version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                  width={width ? width : '40'} height={height ? height : '40'} viewBox="0 0 375.01 375.01">
                 <g>
                     <g>
