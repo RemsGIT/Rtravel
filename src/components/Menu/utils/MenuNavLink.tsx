@@ -19,12 +19,12 @@ import {ElementType} from "react";
 import themeConfig from "@/theme/ThemeConfig";
 import Icon from "@/components/Icon";
 import {useTheme} from "@mui/material/styles";
+import {useSettings} from "@/hooks/useSettings";
 
 interface Props {
     parent?: boolean
     item: NavLink
     navHover?: boolean
-    settings: Settings
     navVisible?: boolean
     collapsedNavWidth: number
     navigationBorderWidth: number
@@ -65,7 +65,6 @@ const MenuNavLink = ({
      item,
      parent,
      navHover,
-     settings,
      navVisible,
      isSubToSub,
      collapsedNavWidth,
@@ -76,6 +75,7 @@ const MenuNavLink = ({
     const router = useRouter()
     const theme = useTheme()
     const pathname = usePathname()
+    const { settings } = useSettings()
     
     // ** Vars
     const { navCollapsed, mode } = settings

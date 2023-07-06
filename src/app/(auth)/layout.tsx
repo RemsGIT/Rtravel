@@ -43,32 +43,19 @@ export default function AuthLayout({children}: {children: React.ReactNode}) {
     
     return (
         <AuthProvider>
-            <SettingsProvider>
-                <SettingsConsumer>
-                    {({ settings }) => {
-                        return (
-                            <Theme settings={settings}>
-                                {!isLoading ? (
-                                    <>
-                                        <AuthDetectorMode />
-                                        <BlankLayoutWrapper className='layout-wrapper'>
-                                            <Box className='app-content' sx={{ minHeight: '100vh', overflowX: 'hidden', position: 'relative' }}>
-                                                {/* eslint-disable-next-line react/no-children-prop */}
-                                                {children}
-                                            </Box>
-                                        </BlankLayoutWrapper>
-                                        <ReactHotToast>
-                                            <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
-                                        </ReactHotToast>
-                                    </>
-                                ) : (
-                                    <LoadingPageSpinner />
-                                )}
-                            </Theme>
-                        )
-                    }}
-                </SettingsConsumer>
-            </SettingsProvider>
+            {!isLoading ? (
+                <>
+                    <AuthDetectorMode />
+                    <BlankLayoutWrapper className='layout-wrapper'>
+                        <Box className='app-content' sx={{ minHeight: '100vh', overflowX: 'hidden', position: 'relative' }}>
+                            {/* eslint-disable-next-line react/no-children-prop */}
+                            {children}
+                        </Box>
+                    </BlankLayoutWrapper>
+                </>
+            ) : (
+                <LoadingPageSpinner />
+            )}
         </AuthProvider>
 
     )

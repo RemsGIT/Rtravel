@@ -16,29 +16,14 @@ const VerticalLayoutWrapper = styled('div')({
 const AppContainer = (props: any) => {
 
     return (
-        <SettingsProvider>
-            <SettingsConsumer>
-                {({settings}) => {
-                    return (
-                        <Theme settings={settings}>
-                            <ProtectedLayout>
-                                <>
-                                    <VerticalLayoutWrapper>
-                                        {/* eslint-disable-next-line react/no-children-prop */}
-                                        <App children={props.children} settings={settings} {...props}></App>
-                                    </VerticalLayoutWrapper>
-                                    <ReactHotToast>
-                                        <Toaster  position={settings.toastPosition} toastOptions={{className: 'react-hot-toast'}}/>
-                                    </ReactHotToast>
-                                </>
-                            </ProtectedLayout>
-
-                        </Theme>
-                    )
-                }}
-            </SettingsConsumer>
-        </SettingsProvider>
-
+        <ProtectedLayout>
+            <>
+                <VerticalLayoutWrapper>
+                    {/* eslint-disable-next-line react/no-children-prop */}
+                    <App children={props.children} {...props}></App>
+                </VerticalLayoutWrapper>
+            </>
+        </ProtectedLayout>
     )
 
 }

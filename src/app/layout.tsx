@@ -3,6 +3,14 @@ import './globals.scss'
 import {Inter} from 'next/font/google'
 import Head from "next/head";
 import {Metadata} from "next";
+import {SettingsConsumer, SettingsProvider} from "@/context/settingsContext";
+import Theme from "@/theme/Theme";
+import AuthDetectorMode from "@/app/(auth)/AuthDetectorMode";
+import Box from "@mui/material/Box";
+import ReactHotToast from "@/theme/libs/react-hot-toast";
+import {Toaster} from "react-hot-toast";
+import LoadingPageSpinner from "@/components/LoadingPageSpinner";
+import ThemeContainer from "@/ThemeContainer";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -48,6 +56,7 @@ export const metadata: Metadata = {
     },
 };
 
+
 export default function RootLayout(props: any) {
     return (
             <html lang="en">
@@ -61,7 +70,7 @@ export default function RootLayout(props: any) {
                             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDc14yoTa1jbLUY7PefSHQemTD3JcDgYrI&libraries=places&amp;language=fr">
                     </script>
                     {/* eslint-disable-next-line react/no-children-prop */}
-                    {props.children}
+                    <ThemeContainer children={props.children} />
                 </body>
             </html>
     )
