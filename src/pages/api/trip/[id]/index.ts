@@ -21,8 +21,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     switch (req.method) {
-        case 'GET':
-            await getTripById(id, session?.user, res);
+        case 'GET': await getTripById(id, session?.user, res); break;
+        case 'DELETE': await deleteTripById(id, session?.user, res); break;
     }
 }
 
@@ -46,3 +46,16 @@ async function getTripById(id: string, user: any, res: NextApiResponse) {
         return res.status(500).json({message: "The trip does not exists or you are not the owner"})
     }
 }  
+
+async function deleteTripById(id: string, user: any, res: NextApiResponse) {
+    const tripDeleted = await prisma.trip.deleteMany({
+        where: {id, creatorId: user.id}
+    })
+
+    if(tripDeleted) {
+        return res.status(200).json({status: "success", result: tripDeleted})
+    }
+    else {
+        return res.status(500).json({message: "The trip does not exists or you are not the owner"})
+    }
+}

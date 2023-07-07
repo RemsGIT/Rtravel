@@ -5,6 +5,7 @@ import {Button} from "@mui/material";
 import axios from "axios";
 import {Trip} from "@prisma/client";
 import List from "@/components/Trips/List";
+import toast from "react-hot-toast";
 
 export default function Trips() {
     
@@ -21,10 +22,22 @@ export default function Trips() {
                 setUserTrips(r.data.trips)
             })
     }, [])
+    
+    const saveTripDB = (data: any) => {
+        axios
+            .post('/api/trip', {data})
+            .then(response => {
+                if(response.data.status === "success") {
+                    toast.success(`Voyage ${response.data.trip.name} créé !`)
+                    
+                    setUserTrips(oldArray => [...oldArray, response.data.trip])
+                }
+            })
+    }
 
     return (
         <>
-            <TripSidebar open={openModalCreate} handleClose={handleCloseModalCreate}/>
+            <TripSidebar open={openModalCreate} handleClose={handleCloseModalCreate} handleSubmitForm={saveTripDB}/>
             
             <Button variant={"contained"} color={"primary"} onClick={() => setOpenModalCreate(true)}>Nouveau voyage</Button>
             

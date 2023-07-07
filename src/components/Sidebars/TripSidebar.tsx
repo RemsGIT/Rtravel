@@ -14,8 +14,6 @@ import {forwardRef, Fragment, useEffect, useState} from "react";
 import {addDays, format} from "date-fns";
 import Icon from "@/components/Icon";
 import {fr} from "date-fns/locale";
-import axios from "axios";
-import toast from "react-hot-toast";
 import SelectCity from "@/components/Utils/SelectCity";
 import {Theme} from "@mui/material/styles";
 
@@ -26,7 +24,7 @@ interface PickerProps {
     end: Date
 }
 
-const TripSidebar = ({open, handleClose}: { open: boolean, handleClose: () => void }) => {
+const TripSidebar = ({open, handleSubmitForm, handleClose}: { open: boolean, handleSubmitForm: (data: any) => void, handleClose: () => void }) => {
     const DEFAULT_START = new Date();
     const DEFAULT_END = addDays(new Date(), 3)
 
@@ -94,16 +92,9 @@ const TripSidebar = ({open, handleClose}: { open: boolean, handleClose: () => vo
     }
 
     const onSubmit = async (data: any) => {
-        axios
-            .post('/api/trip', {data})
-            .then(response => {
-                if(response.data.status === "success") {
-                    toast.success(`Voyage ${response.data.trip.name} créé !`)
-                }
-
-                reset()
-                handleClose()
-            })
+        handleSubmitForm(data)
+        reset()
+        handleClose()
     }
 
     const RenderSidebarFooter = () => {

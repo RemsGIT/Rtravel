@@ -1,8 +1,6 @@
 import {NextRouter} from "next/router";
 import {differenceInDays, format} from "date-fns";
 import {fr} from "date-fns/locale";
-import {date} from "yup";
-
 
 export const hexToRGBA = (hexCode: string, opacity: number) => {
     let hex = hexCode.replace('#', '')
@@ -34,9 +32,9 @@ export const uppercaseFirst = (str: string) => {
 
 export const toFrenchDate = (date: Date, dayLetter: boolean = false) => {
     
-    const dateFormat = dayLetter ?  'EEEE dd LLLL Y' : 'dd LLLL Y';
-    
-    return format(new Date(date), dateFormat, {locale: fr})
+        const dateFormat = dayLetter ?  'EEEE dd LLLL Y' : 'dd LLLL Y';
+
+        return format(new Date(date), dateFormat, {locale: fr})
 }  
 
 export const getStartInNumber = (start: Date) => {

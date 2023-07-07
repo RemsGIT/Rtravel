@@ -2,8 +2,8 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "Your App Name",
-  "short_name": "your_app_name",
+  "name": "Rtravel - Planification de voyage",
+  "short_name": "Rtravel",
   "description": "A PWA boilerplate with Next Js TypeScript",
   "icons": [
     {

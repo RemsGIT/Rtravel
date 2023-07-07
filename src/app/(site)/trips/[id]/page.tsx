@@ -11,6 +11,7 @@ import {styled, Theme} from "@mui/material/styles";
 import {TabContext, TabPanel} from "@mui/lab";
 import MuiTabList, { TabListProps } from '@mui/lab/TabList'
 import Icon from "@/components/Icon";
+import Settings from "@/components/Trips/Settings/Settings";
 
 // Styled components
 const TabList = styled(MuiTabList)<TabListProps>(({ theme }) => ({
@@ -77,7 +78,7 @@ const Trip = ({params} : {params: Params}) => {
                             <Grid item xs={12}>
                                 <TabList
                                     variant='scrollable'
-                                    scrollButtons='auto'
+                                    scrollButtons={'auto'}
                                     onChange={handleChangeTab}
                                     aria-label='customized tabs example'
                                 >
@@ -100,12 +101,21 @@ const Trip = ({params} : {params: Params}) => {
                                         }
                                     />
                                     <Tab
+                                        value='3'
+                                        label={
+                                            <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
+                                                <Icon fontSize={20} icon='mdi:cog' />
+                                                {!hideText && 'Paramètres'}
+                                            </Box>
+                                        }
+                                    />
+                                    <Tab
                                         value='2'
                                         disabled={true}
                                         label={
                                             <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
                                                 <Icon fontSize={20} icon='mdi:cash' />
-                                                {!hideText && 'Budget (prochainement)'}
+                                                {!hideText && 'Budget'} (prochainement)
                                             </Box>
                                         }
                                     />
@@ -115,6 +125,7 @@ const Trip = ({params} : {params: Params}) => {
                                 <TabPanel sx={{ p: 0 }} value={tabActive}>
                                     {tabActive === "0" && <General tripId={params.id} isLoading={isLoading} handleLoading={handleLoading} />}
                                     {tabActive === "1" && <Team tripId={params.id} isLoading={isLoading}  handleLoading={handleLoading}/>}
+                                    {tabActive === "3" && <Settings tripId={params.id} isLoading={isLoading}  handleLoading={handleLoading}/>}
                                 </TabPanel>
                             </Grid>
                         </Grid>
