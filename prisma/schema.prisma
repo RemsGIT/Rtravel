@@ -84,7 +84,7 @@ model Step {
   type String?
   city String
   start DateTime
-  trip Trip @relation(fields: [tripId], references: [id])
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   description String?
   tripId String
   createdAt DateTime @default(now())
@@ -95,7 +95,7 @@ model Participant {
   identifier String
   name String
   image String?
-  trip Trip @relation(fields: [tripId], references: [id])
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   tripId String
 }
 
