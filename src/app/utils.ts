@@ -32,9 +32,15 @@ export const uppercaseFirst = (str: string) => {
 
 export const toFrenchDate = (date: Date, dayLetter: boolean = false) => {
     
+    try {
         const dateFormat = dayLetter ?  'EEEE dd LLLL Y' : 'dd LLLL Y';
 
         return format(new Date(date), dateFormat, {locale: fr})
+    }
+    catch (e) {
+        return date
+    }
+
 }  
 
 export const getStartInNumber = (start: Date) => {
