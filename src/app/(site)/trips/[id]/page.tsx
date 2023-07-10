@@ -144,7 +144,7 @@ const Trip = ({params} : {params: Params}) => {
                                         label={
                                             <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
                                                 <Icon fontSize={20} icon='mdi:cash' />
-                                                {!hideText && 'Budget'} (prochainement)
+                                                {!hideText && 'Budget'} (À venir)
                                             </Box>
                                         }
                                     />
