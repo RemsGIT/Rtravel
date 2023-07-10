@@ -57,6 +57,7 @@ const SelectCity = ({handleOnChange, resetText, defaultCity = '', isDeleting = f
             }}
             disablePortal={fromSidebar ? true : false}
             options={predictions}
+            noOptionsText={'Aucune ville trouvée'}
             disabled={isDeleting}
         />
     )
