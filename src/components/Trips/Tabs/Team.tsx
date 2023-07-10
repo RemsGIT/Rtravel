@@ -1,15 +1,20 @@
 import {useEffect, useState} from "react";
 import {Avatar, Box, Button, Card, CardContent, CircularProgress, Grid, Typography} from "@mui/material";
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import OptionsMenuCard from "@/components/Utils/OptionsMenuCard";
 import ModalAddParticipant from "@/components/Forms/Modals/ModalCreateParticipant";
+import toast from "react-hot-toast";
+import DialogConfirmation from "@/components/Dialogs/DialogConfirmation";
 
 const Team = ({tripId, isLoading, handleLoading} : {tripId: string, isLoading: boolean, handleLoading: (isLoading: boolean) => void}) => {
 
     const [openModalParticipant, setOpenModalParticipant] = useState<boolean>(false)
+    const [openDeleteDialogConfirmation, setOpenDeleteDialogConfirmation] = useState<boolean>(false)
     const [participantList, setParticipantList] = useState<any>([])
     const [participantToEdit, setParticipantToEdit] = useState<any>(undefined)
+    const [IDdeleteParticipant, setIDdeleteParticipant] = useState<string>("")
 
+    
     useEffect(() => {
         axios
             .get(`${process.env.NEXT_PUBLIC_APPURL}/api/trip/${tripId}/team`)
@@ -22,19 +27,43 @@ const Team = ({tripId, isLoading, handleLoading} : {tripId: string, isLoading: b
             })
     }, [])
 
-    const saveActivityToDb = (data: any) => {
-        console.log(data)
+    const saveParticipantToDb = (data: any) => {
+        data.tripId = tripId
+        
+        axios
+            .post("/api/participant", {data})
+            .then((response: AxiosResponse) => {
+                if(response.data.status === "success") {
+                    toast.success(`${response.data.participant.name} a été ajouté au voyage `)
+                    setParticipantList((oldArray: any) => [...oldArray, response.data.participant])
+
+                }
+            })
     }
 
-    const updateActivityDb = (data: any) => {
+    const updateParticipantDb = (data: any) => {
         if(data) {
             // code
         }
     }
 
-    const deleteActivityDb = (id: string) => {
-        if(id) {
-            // code
+    const deleteParticipantDb = () => {
+        if(!!IDdeleteParticipant) {
+            axios
+                .delete(`/api/participant/${IDdeleteParticipant}`)
+                .then((response: AxiosResponse) => {
+                    console.log(response)
+                    if(response.data) {
+                        toast.remove()
+                        toast.success(`${response.data.name} a été retiré du voyage`)
+                        
+                        // Remove the participant from UI
+                        setParticipantList((prevParticipantList: any) => prevParticipantList.filter((participant: any) => participant.id !== IDdeleteParticipant));
+
+                        
+                        setOpenDeleteDialogConfirmation(false)
+                    }
+                })
         }
     }
 
@@ -91,7 +120,8 @@ const Team = ({tripId, isLoading, handleLoading} : {tripId: string, isLoading: b
                                                                     text: 'Supprimer',
                                                                     menuItemProps: {
                                                                         onClick: () => {
-                                                                            console.log('remove')
+                                                                            setIDdeleteParticipant(participant.id)
+                                                                            setOpenDeleteDialogConfirmation(true)
                                                                         },
                                                                         sx: { color: 'error.main' }
                                                                     }
@@ -109,7 +139,14 @@ const Team = ({tripId, isLoading, handleLoading} : {tripId: string, isLoading: b
                                 ))}
                         </Grid>
 
-                        <ModalAddParticipant open={openModalParticipant} handleClose={() => setOpenModalParticipant(false)} handleSubmitForm={saveActivityToDb} defaultParticipant={participantToEdit}/>
+                        <ModalAddParticipant open={openModalParticipant} handleClose={() => setOpenModalParticipant(false)} handleSubmitForm={saveParticipantToDb} defaultParticipant={participantToEdit}/>
+                        <DialogConfirmation
+                            open={openDeleteDialogConfirmation}
+                            handleNo={() => setOpenDeleteDialogConfirmation(false)}
+                            handleYes={deleteParticipantDb}
+                            title={"Retirer un participant"}
+                            message={"Voulez-vous vraiment retirer ce participant du voyage ?"}
+                        />  
                     </>
                 )
             }

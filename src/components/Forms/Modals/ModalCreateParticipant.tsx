@@ -14,7 +14,8 @@ const ModalAddParticipant = ({
     const {register, handleSubmit, reset, setValue} = useForm({
         defaultValues: {
             name: defaultParticipant !== undefined ? defaultParticipant.name : '',
-            edit_mode: false
+            userId: null,
+            edit_mode: false,
         }
     });
 
