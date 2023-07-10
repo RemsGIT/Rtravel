@@ -1,10 +1,11 @@
 import {DataGrid, frFR, GridColDef, GridRenderCellParams, GridToolbarFilterButton} from '@mui/x-data-grid'
-import {Box, Card, IconButton, TextField, Typography} from "@mui/material";
+import {Box, Card, IconButton, TextField, Typography, useMediaQuery} from "@mui/material";
 import {ChangeEvent, useEffect, useState} from "react";
 import Icon from "@/components/Icon";
 import {toFrenchDate} from "@/app/utils";
 import {format} from "date-fns";
 import DialogConfirmation from "@/components/Dialogs/DialogConfirmation";
+import {useTheme} from "@mui/material/styles";
 
 interface ToolbarProps {
     value: string
@@ -74,7 +75,7 @@ const Toolbar = (props: ToolbarProps) => {
 }
 
 const TableTripActivities = ({activities, onClickUpdateActivity, onClickDeleteActivity}: { activities: Array<any>,onClickUpdateActivity: (id: string) => void, onClickDeleteActivity: (id: string) => void}) => {
-
+    const theme = useTheme();
     const [data, setData] = useState<DataGridRowType[]>(activities)
     const [searchText, setSearchText] = useState<string>('')
     const [filteredData, setFilteredData] = useState<DataGridRowType[]>([])
@@ -82,6 +83,9 @@ const TableTripActivities = ({activities, onClickUpdateActivity, onClickDeleteAc
     const [openModalConfirmation, setOpenModalConfirmation] = useState<boolean>(false);
 
     const [IDdeleteActivity, setIDdeleteActivity] = useState<string>("none")
+
+    const hideColumnsForMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
 
     useEffect(() => {
         setData(activities)
@@ -111,8 +115,8 @@ const TableTripActivities = ({activities, onClickUpdateActivity, onClickDeleteAc
     const columns: GridColDef[] = [
         {
             flex: 0.275,
-            minWidth: 290,
             field: 'name',
+            maxWidth: 300,
             headerName: 'Nom',
             renderCell: (params: GridRenderCellParams) => {
                 return (
@@ -126,7 +130,7 @@ const TableTripActivities = ({activities, onClickUpdateActivity, onClickDeleteAc
             flex: 0.2,
             type: 'date',
             minWidth: 120,
-            headerName: 'Date & heure',
+            headerName: 'Date',
             field: 'start',
             valueGetter: params => new Date(params.value),
             renderCell: (params: GridRenderCellParams) => {
@@ -197,6 +201,12 @@ const TableTripActivities = ({activities, onClickUpdateActivity, onClickDeleteAc
             )
         }
     ]
+    
+    // columns visibility
+    const columnsVisibilityModel = {
+        type: !hideColumnsForMobile,
+        city: !hideColumnsForMobile
+    }
 
     // delete
     const clickDeleteActivity = () => {
@@ -216,6 +226,11 @@ const TableTripActivities = ({activities, onClickUpdateActivity, onClickDeleteAc
                 slots={{toolbar: Toolbar}}
                 onPaginationModelChange={setPaginationModel}
                 rows={filteredData.length ? filteredData : data}
+                initialState={{
+                    columns: {
+                        columnVisibilityModel: columnsVisibilityModel
+                    },
+                }}
                 slotProps={{
                     baseButton: {
                         variant: 'outlined'

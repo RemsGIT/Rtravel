@@ -4,11 +4,12 @@ import {
     DialogContent,
     IconButton,
     Toolbar,
-    Typography
+    Typography, useMediaQuery
 } from "@mui/material";
 import Icon from "@/components/Icon";
 import TableTripActivities from "@/components/DataTables/TableTripActivities";
 import {useEffect} from "react";
+import {useTheme} from "@mui/material/styles";
 
 interface DialogActivitiesType {
     tripId: string | undefined,
@@ -25,6 +26,10 @@ const DialogActivities = ({
                               onClickOpenUpdate,
                               onDeleteActivity,
                           }: { open: boolean, handleClose: () => void, trip: DialogActivitiesType, onClickOpenCreate: () => void,onClickOpenUpdate: (id: string) => void, onDeleteActivity: (id: string ) => void}) => {
+
+    const theme = useTheme();
+    const noPadding = useMediaQuery(theme.breakpoints.down('md'))
+    
     return (
         <Dialog fullScreen onClose={handleClose} aria-labelledby='full-screen-dialog-title' open={open}>
             <Toolbar sx={{backgroundColor: 'primary.main'}}>
@@ -44,7 +49,7 @@ const DialogActivities = ({
                     Ajouter
                 </Button>
             </Toolbar>
-            <DialogContent>
+            <DialogContent sx={{p: noPadding ? '0 !important' : ''}}>
                 <TableTripActivities activities={trip.activities} onClickUpdateActivity={onClickOpenUpdate} onClickDeleteActivity={onDeleteActivity}/>
             </DialogContent>
         </Dialog>
