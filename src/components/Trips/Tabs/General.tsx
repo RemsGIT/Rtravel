@@ -65,7 +65,6 @@ const General = ({
                         
                         const indexToUpdate = newData.steps.findIndex((activity: any) => activity.id === response.data.id)
 
-                        console.log(indexToUpdate)
                         if(indexToUpdate !== -1) {
                             updatedActivities[indexToUpdate] = response.data
                             

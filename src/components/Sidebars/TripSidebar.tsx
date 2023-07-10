@@ -154,7 +154,7 @@ const TripSidebar = ({open, handleSubmitForm, handleClose}: { open: boolean, han
                             <TextField label={"Nom"}  {...register("name")} placeholder={"Nom du voyage"}/>
                         </FormControl>
                         <FormControl fullWidth={true} sx={{mb: 6}}>
-                            <SelectCity {...register("city")} handleOnChange={handleOnChangeCity} resetText={resetCity}/>
+                            <SelectCity {...register("city")} handleOnChange={handleOnChangeCity} resetText={resetCity} fromSidebar={true}/>
                         </FormControl>
                         <Box sx={{ mb: 6 }}>
                             <DatePicker

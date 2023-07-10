@@ -59,8 +59,10 @@ const TabList = styled(MuiTabList)<TabListProps>(({ theme }) => ({
 const Settings = ({
                      tripId,
                      isLoading,
-                     handleLoading
-                 }: { tripId: string, isLoading: boolean, handleLoading: (isLoading: boolean) => void }) => {
+                     handleLoading,
+                     handleUpdate,
+                     handleDelete,
+                 }: { tripId: string, isLoading: boolean, handleLoading: (isLoading: boolean) => void, handleUpdate: (data: any) => void, handleDelete: (id: string) => void }) => {
     
     const [openDialogDelete, setOpenDialogDelete] = useState<boolean>(false)
     const [isDeleting, setIsDeleting] = useState<boolean>(false)
@@ -84,17 +86,7 @@ const Settings = ({
         setIsDeleting(true)
         toast.loading("Suppression du voyage en cours")
         
-        axios
-            .delete(`/api/trip/${tripId}`)
-            .then(res => {
-                if(res.data.status === "success" && res.data.result.count > 0) {
-                    toast.remove()
-                    toast.success("Le voyage a bien été supprimé")
-                    
-                    // redirect user to trip list after delete
-                    router.push("/trips")
-                }
-            })
+        handleDelete(tripId);
     }
     
     return (
@@ -130,7 +122,7 @@ const Settings = ({
                                         </Box>
                                         </Box>
                                         <Box sx={{mt: 5}}>
-                                            <GeneralForm data={tripData} isDeleting={isDeleting}/>
+                                            <GeneralForm data={tripData} isDeleting={isDeleting} handleUpdate={handleUpdate}/>
                                         </Box>
                                     </Box>
                                 </TabPanel>

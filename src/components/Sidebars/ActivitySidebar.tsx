@@ -167,6 +167,7 @@ const ActivitySidebar = ({open,handleClose,handleSubmitForm,defaultDate = null,s
                                 handleOnChange={handleOnChangeCity}
                                 defaultCity={(defaultActivity !== undefined ? defaultActivity.city : '')}
                                 resetText={resetCity}
+                                fromSidebar={true}
                             />
                         </FormControl>
                         <FormControl fullWidth={true} sx={{mb: 6}}>

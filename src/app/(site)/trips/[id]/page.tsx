@@ -12,6 +12,8 @@ import {TabContext, TabPanel} from "@mui/lab";
 import MuiTabList, { TabListProps } from '@mui/lab/TabList'
 import Icon from "@/components/Icon";
 import Settings from "@/components/Trips/Settings/Settings";
+import toast from "react-hot-toast";
+import {useRouter} from "next/navigation";
 
 // Styled components
 const TabList = styled(MuiTabList)<TabListProps>(({ theme }) => ({
@@ -39,6 +41,7 @@ interface Params {
 }
 
 const Trip = ({params} : {params: Params}) => {
+    const router = useRouter()
     const [trip, setTrip] = useState<Trip>();
     const [tabActive, setTabActive] = useState<string>("0");
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -52,6 +55,32 @@ const Trip = ({params} : {params: Params}) => {
     const handleChangeTab = (event: SyntheticEvent, value: string) => {
         setIsLoading(true)
         setTabActive(value)
+    }
+    
+    const deleteTrip = (id: string) => {
+        axios
+            .delete(`/api/trip/${id}`)
+            .then(res => {
+                if(res.data.status === "success" && res.data.result.count > 0) {
+                    toast.remove()
+                    toast.success("Le voyage a bien été supprimé")
+
+                    // redirect user to trip list after delete
+                    router.push("/trips")
+                }
+            })
+    }
+    
+    const updateTrip = (data: any) => {
+        axios
+            .put(`/api/trip/${data.id}`, {data})
+            .then(response => {
+                if(response.data.status === "success" && response.data.tripUpdated) {
+                    toast.success("Des informations du voyage ont été modifiées")
+
+                    setTrip(response.data.tripUpdated)
+                }
+            })
     }
     
     useEffect(() => {
@@ -125,7 +154,7 @@ const Trip = ({params} : {params: Params}) => {
                                 <TabPanel sx={{ p: 0 }} value={tabActive}>
                                     {tabActive === "0" && <General tripId={params.id} isLoading={isLoading} handleLoading={handleLoading} />}
                                     {tabActive === "1" && <Team tripId={params.id} isLoading={isLoading}  handleLoading={handleLoading}/>}
-                                    {tabActive === "3" && <Settings tripId={params.id} isLoading={isLoading}  handleLoading={handleLoading}/>}
+                                    {tabActive === "3" && <Settings tripId={params.id} isLoading={isLoading}  handleLoading={handleLoading} handleUpdate={updateTrip} handleDelete={deleteTrip}/>}
                                 </TabPanel>
                             </Grid>
                         </Grid>

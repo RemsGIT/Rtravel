@@ -23,6 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     switch (req.method) {
         case 'GET': await getTripById(id, session?.user, res); break;
         case 'DELETE': await deleteTripById(id, session?.user, res); break;
+        case 'PUT': await updateTripById(id, req.body.data, session?.user, res); break;
     }
 }
 
@@ -58,4 +59,25 @@ async function deleteTripById(id: string, user: any, res: NextApiResponse) {
     else {
         return res.status(500).json({message: "The trip does not exists or you are not the owner"})
     }
+}
+
+async function updateTripById(id: string, data: any, user: any, res: NextApiResponse) {
+
+    const trip = await prisma.trip.findFirst({
+        where: {id, creatorId: user.id}
+    });
+    
+    if(trip) {
+        const tripUpdated = await prisma.trip.update({
+            where: {id: trip.id},
+            data: data
+        })
+
+        return res.status(200).json({status: "success", tripUpdated})
+    }
+
+    return res.status(500).json({message: "The trip does not exists or you are not the owner"})
+
+
+
 }

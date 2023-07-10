@@ -22,6 +22,7 @@ import SelectCity from "@/components/Utils/SelectCity";
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import toast from "react-hot-toast";
+import axios from "axios";
 
 interface PickerProps {
     label: string,
@@ -37,7 +38,7 @@ const ValidationSchema = yup.object().shape({
         .required("Veuillez choisir un véhicule")
 })
 
-const GeneralForm = ({data, isDeleting}: { data: any, isDeleting: boolean}) => {
+const GeneralForm = ({data, isDeleting, handleUpdate}: { data: any, isDeleting: boolean, handleUpdate: (data: any) => void}) => {
 
     const {register, handleSubmit, getValues, setValue, control, formState: {errors}} = useForm({
         defaultValues: {
@@ -85,9 +86,7 @@ const GeneralForm = ({data, isDeleting}: { data: any, isDeleting: boolean}) => {
     }
     
     const onSubmitForm = (data: any) => {
-        console.log(data)
-        
-        toast.success("Des informations du voyage ont été modifiées")
+        handleUpdate(data)
     }
 
     return (
