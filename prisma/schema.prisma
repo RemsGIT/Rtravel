@@ -15,32 +15,33 @@ enum Role {
 
 // ** USER & AUTH ** //
 model User {
-  id            String    @id @default(cuid())
+  id            String        @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?       @unique
   password      String
   emailVerified Boolean
   image         String?
   accounts      Account[]
   sessions      Session[]
-  trips Trip[]
-  createdAt DateTime @default(now())
-  role Role @default(USER)
+  trips         Trip[]
+  createdAt     DateTime      @default(now())
+  role          Role          @default(USER)
+  Participants   Participant[]
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -65,37 +66,37 @@ model VerificationToken {
 
 // ** MODELS ** //
 model Trip {
-  id        String       @id @default(cuid())
-  name     String
-  city   String?
-  start DateTime
-  end DateTime
-  vehicle String?
-  creator User @relation(fields: [creatorId], references: [id])
-  creatorId String
-  steps Step[]
+  id           String        @id @default(cuid())
+  name         String
+  city         String?
+  start        DateTime
+  end          DateTime
+  vehicle      String?
+  creator      User          @relation(fields: [creatorId], references: [id])
+  creatorId    String
+  steps        Step[]
   participants Participant[]
-  createdAt DateTime @default(now())
+  createdAt    DateTime      @default(now())
 }
 
 model Step {
-  id String @id @default(cuid())
-  name String
-  type String?
-  city String
-  start DateTime
-  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id          String   @id @default(cuid())
+  name        String
+  type        String?
+  city        String
+  start       DateTime
+  trip        Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   description String?
-  tripId String
-  createdAt DateTime @default(now())
+  tripId      String
+  createdAt   DateTime @default(now())
 }
 
 model Participant {
-  id String @id @default(cuid())
-  identifier String
-  name String
-  image String?
-  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id     String  @id @default(cuid())
+  name   String
+  image  String?
+  trip   Trip    @relation(fields: [tripId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String?
   tripId String
 }
-

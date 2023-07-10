@@ -4,7 +4,7 @@ import {Card, CardContent, CardHeader} from "@mui/material";
 import Icon from "@/components/Icon";
 import OptionsMenuCard from "@/components/Utils/OptionsMenuCard";
 import ActivitiesSlider from "@/components/Trips/Utils/ActivitiesSlider";
-import ActivitySidebar from "@/components/Sidebars/ActivitySidebar";
+import ActivitySidebar from "@/components/Forms/Sidebars/ActivitySidebar";
 import DialogActivities from "@/components/Dialogs/DialogActivities";
 import {da} from "date-fns/locale";
 

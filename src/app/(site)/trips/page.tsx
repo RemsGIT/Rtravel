@@ -1,5 +1,5 @@
 "use client"
-import TripSidebar from "@/components/Sidebars/TripSidebar";
+import TripSidebar from "@/components/Forms/Sidebars/TripSidebar";
 import {useEffect, useState} from "react";
 import {Button} from "@mui/material";
 import axios from "axios";
