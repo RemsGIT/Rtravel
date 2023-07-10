@@ -1,7 +1,7 @@
 html,
-body {
-  min-height: 100%;
-}
+ body {
+   min-height: 100%;
+ }
 
 #__next {
   height: 100%;
@@ -9,4 +9,14 @@ body {
 
 .ArrowEmptyData svg{
   transform: rotate(105deg) scaleY(-1);
+}
+
+.card-map {
+  height: 100%;
+  width: 100%;
+}
+
+.widget-map-container {
+  max-height: calc(100vh - 170px);
+  /*min-height: 500px;*/
 }

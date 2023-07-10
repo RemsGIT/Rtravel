@@ -1,6 +1,7 @@
 import {Card, CardContent, CardHeader, Grid} from "@mui/material";
 import {useSession} from "next-auth/react";
 import {useEffect, useState} from "react";
+import WidgetMap from "@/components/Dashboard/Widgets/WidgetMap";
 
 const UserDashboard = () => {
     const { data: session, status } = useSession()
@@ -11,7 +12,7 @@ const UserDashboard = () => {
                 <Card className="widget-map-container">
                     <CardHeader title="Ma carte"/>
                     <CardContent className="card-map">
-                        Carte des voyages
+                        <WidgetMap />
                     </CardContent>
                 </Card>
             </Grid>
