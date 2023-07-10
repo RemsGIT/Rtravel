@@ -111,7 +111,7 @@ const Settings = ({
                             
                             {/* Tabs content */}
                             <Box sx={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                                <TabPanel key={'general'} value={'general'} sx={{ p: 6, width: '100%', pt: { xs: 6, md: 0 }, pl: { xs: 0, md: 6 } }}>
+                                <TabPanel key={'general'} value={'general'} sx={{ p: { xs: 0, md: 6 }, width: '100%', pt: { xs: 6, md: 0 }, pl: { xs: 0, md: 6 } }}>
                                     <Box key={'general'}>
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                             <CustomAvatar skin='light' variant='rounded' sx={{ height: 50, width: 50 }}>

@@ -10,10 +10,9 @@ import {
     useMediaQuery
 } from "@mui/material";
 import {Controller, useForm} from "react-hook-form";
-import DatePicker from "react-datepicker";
+import DatePicker, {registerLocale} from "react-datepicker";
 import {forwardRef, useState} from "react";
 import {format} from "date-fns";
-import {fr} from "date-fns/locale";
 import DatePickerWrapper from "@/theme/libs/react-datepicker";
 import {Theme} from "@mui/material/styles";
 import MenuItem from "@mui/material/MenuItem";
@@ -21,8 +20,8 @@ import SelectCity from "@/components/Utils/SelectCity";
 
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import toast from "react-hot-toast";
-import axios from "axios";
+import fr from "date-fns/locale/fr";
+registerLocale("fr", fr);
 
 interface PickerProps {
     label: string,
@@ -123,6 +122,7 @@ const GeneralForm = ({data, isDeleting, handleUpdate}: { data: any, isDeleting: 
                                         customInput={
                                             <CustomInput label='Dates' start={startDate as Date} end={endDate as Date}/>
                                         }
+                                        locale={fr}
                                         popperProps={{ strategy: 'fixed' }}
                                     />
                                 </FormControl>
