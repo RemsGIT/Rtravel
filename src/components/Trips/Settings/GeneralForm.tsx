@@ -95,7 +95,7 @@ const GeneralForm = ({data, isDeleting, handleUpdate}: { data: any, isDeleting: 
                 <CardContent>
                     <form onSubmit={handleSubmit(onSubmitForm)}>
                         <Grid container spacing={2}>
-                            <Grid container item xs={6} direction="column">
+                            <Grid container item md={6} direction="column">
                                 <FormControl sx={{mb: 6}}>
                                     <TextField label={"Nom"} placeholder={"Nom du voyage"} {...register("name")} error={Boolean(errors.name)} disabled={isDeleting}/>
                                     {/*@ts-ignore*/}
@@ -109,7 +109,7 @@ const GeneralForm = ({data, isDeleting, handleUpdate}: { data: any, isDeleting: 
                                 </FormControl>
                                 
                             </Grid>
-                            <Grid container item xs={6} direction="column">
+                            <Grid container item md={6} direction="column">
                                 <FormControl sx={{mb: 6}}>
                                     <DatePicker
                                         selectsRange
