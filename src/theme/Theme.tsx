@@ -24,6 +24,8 @@ import {deepmerge} from "@mui/utils";
 import overrides from './overrides'
 import typography from './typography'
 
+import {frFR} from "@mui/x-date-pickers";
+
 interface Props {
     settings: Settings
     children: ReactNode
@@ -34,7 +36,7 @@ const Theme = (props: Props) => {
     const { settings, children } = props
 
     // ** Pass merged ThemeOptions (of core and user) to createTheme function
-    let theme = createTheme(themeOptions(settings))
+    let theme = createTheme(themeOptions(settings), frFR)
 
     // ** Deep Merge Component overrides of core and user
     const mergeComponentOverrides = (theme: Theme, settings: Settings) =>
@@ -46,7 +48,7 @@ const Theme = (props: Props) => {
     // ** Continue theme creation and pass merged component overrides to CreateTheme function
     theme = createTheme(theme, {
         components: { ...mergeComponentOverrides(theme, settings) },
-        typography: { ...mergeTypography(theme) }
+        typography: { ...mergeTypography(theme) },
     })
 
 

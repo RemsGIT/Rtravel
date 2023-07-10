@@ -15,9 +15,11 @@ import {
 import Icon from "@/components/Icon";
 import SelectCity from "@/components/Utils/SelectCity";
 import MenuItem from "@mui/material/MenuItem";
-import DatePicker from "react-datepicker";
+import DatePicker, {registerLocale} from "react-datepicker";
 import DatePickerWrapper from "@/theme/libs/react-datepicker";
 import {Theme} from "@mui/material/styles";
+import fr from "date-fns/locale/fr"; // the locale you want
+registerLocale("fr", fr); // register it with the name you want
 
 interface PickerProps {
     label?: string
@@ -200,10 +202,12 @@ const ActivitySidebar = ({open,handleClose,handleSubmitForm,defaultDate = null,s
                                 selected={dateTime}
                                 minDate={start != null ? new Date(start) : new Date()}
                                 maxDate={end != null ? new Date(end) : new Date()}
-                                dateFormat='MM/dd/yyyy h:mm aa'
-                                onChange={(date: Date) => setDateTime(date)}
+                                dateFormat='MM/dd/yyyy HH:mm'
+                                onChange={(date: Date) => { setDateTime(date) }}
                                 withPortal={mobileMode}
                                 customInput={<CustomInput label='Date & heure'/>}
+                                locale={fr}
+                                timeCaption={"Heure"}
                             />
                         </FormControl>
                     </DatePickerWrapper>

@@ -9,14 +9,14 @@ import {
 import {useForm} from "react-hook-form";
 import MenuItem from "@mui/material/MenuItem";
 import DatePickerWrapper from "@/theme/libs/react-datepicker";
-import DatePicker from 'react-datepicker'
+import DatePicker, {registerLocale} from 'react-datepicker'
 import {forwardRef, Fragment, useEffect, useState} from "react";
 import {addDays, format} from "date-fns";
 import Icon from "@/components/Icon";
-import {fr} from "date-fns/locale";
 import SelectCity from "@/components/Utils/SelectCity";
 import {Theme} from "@mui/material/styles";
-
+import fr from "date-fns/locale/fr";
+registerLocale("fr", fr);
 
 interface PickerProps {
     label: string,
@@ -127,7 +127,7 @@ const TripSidebar = ({open, handleSubmitForm, handleClose}: { open: boolean, han
             open={open}
             onClose={handleClose}
             ModalProps={{keepMounted: true}}
-            sx={{'& .MuiDrawer-paper': {width: ['100%', 400]}}}
+            sx={{'& .MuiDrawer-paper': {width: ['100%', 500]}}}
         >
             <Box
                 className='sidebar-header'
@@ -166,6 +166,7 @@ const TripSidebar = ({open, handleSubmitForm, handleClose}: { open: boolean, han
                                 onChange={handleOnChangeDatePicker}
                                 shouldCloseOnSelect={false}
                                 withPortal={mobileMode}
+                                locale={fr}
                                 customInput={
                                     <CustomInput label='Dates' start={startDate as Date} end={endDate as Date}  />
                                 }

@@ -38,7 +38,7 @@ export const toFrenchDate = (date: Date, dayLetter: boolean = false) => {
         return format(new Date(date), dateFormat, {locale: fr})
     }
     catch (e) {
-        return date
+        return date.toDateString()
     }
 
 }  

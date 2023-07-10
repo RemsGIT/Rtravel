@@ -1,6 +1,8 @@
 // ** MUI Theme Provider
 import { deepmerge } from '@mui/utils'
 import { ThemeOptions } from '@mui/material'
+import {frFR as datagridFR} from "@mui/x-data-grid";
+import {frFR as datapickersFR} from "@mui/x-date-pickers";
 
 // ** Type Import
 import { Settings} from "@/context/settingsContext";
@@ -55,7 +57,7 @@ const themeOptions = (settings: Settings): ThemeOptions => {
                 toolbar: {
                     minHeight: 64
                 }
-            }
+            },
         },
         userThemeConfig
     )
