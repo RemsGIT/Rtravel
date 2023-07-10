@@ -34,7 +34,7 @@ export type OptionType = string | OptionDividerType | OptionMenuItemType
 
 export type OptionsMenuType = {
   icon?: ReactNode
-  options: OptionType[]
+  options: Array<OptionType | null>
   leftAlignMenu?: boolean
   iconButtonProps?: IconButtonProps
   iconProps?: Omit<IconProps, 'icon'>

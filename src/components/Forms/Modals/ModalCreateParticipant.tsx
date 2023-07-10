@@ -13,7 +13,8 @@ const ModalAddParticipant = ({
 
     const {register, handleSubmit, reset, setValue} = useForm({
         defaultValues: {
-            name: defaultParticipant !== undefined ? defaultParticipant.name : '',
+            id: '',
+            name: '',
             userId: null,
             edit_mode: false,
         }
@@ -28,12 +29,12 @@ const ModalAddParticipant = ({
     useEffect(() => {
         if (open) {
             if(defaultParticipant !== undefined) {
+                setValue("id", defaultParticipant.id)
                 setValue("name", defaultParticipant.name)
                 setValue("edit_mode", true)
             }
             else {
-                setValue("name", "")
-                setValue("edit_mode", false)
+                reset()
             }
         }
     }, [open])

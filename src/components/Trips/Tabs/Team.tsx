@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {Avatar, Box, Button, Card, CardContent, CircularProgress, Grid, Typography} from "@mui/material";
-import axios, {AxiosResponse} from "axios";
+import axios, {Axios, AxiosResponse} from "axios";
 import OptionsMenuCard from "@/components/Utils/OptionsMenuCard";
 import ModalAddParticipant from "@/components/Forms/Modals/ModalCreateParticipant";
 import toast from "react-hot-toast";
@@ -30,23 +30,36 @@ const Team = ({tripId, isLoading, handleLoading} : {tripId: string, isLoading: b
     const saveParticipantToDb = (data: any) => {
         data.tripId = tripId
         
-        axios
-            .post("/api/participant", {data})
-            .then((response: AxiosResponse) => {
-                if(response.data.status === "success") {
-                    toast.success(`${response.data.participant.name} a été ajouté au voyage `)
-                    setParticipantList((oldArray: any) => [...oldArray, response.data.participant])
-
-                }
-            })
-    }
-
-    const updateParticipantDb = (data: any) => {
-        if(data) {
-            // code
+        if(data.edit_mode) {
+            axios
+                .put(`/api/participant/${data.id}`, {data})
+                .then((response: AxiosResponse) => {
+                    if(response.data) {
+                        setParticipantList((prevParticipantList: any) => {
+                            return prevParticipantList.map((participant: any) => {
+                                if (participant.id === response.data.id) {
+                                    return response.data;
+                                }
+                                return participant;
+                            });
+                        });
+                        toast.success(`Le participant ${response.data.name} a été modifié`)
+                    }
+                })
         }
-    }
+        else {
+            axios
+                .post("/api/participant", {data})
+                .then((response: AxiosResponse) => {
+                    if(response.data.status === "success") {
+                        toast.success(`${response.data.participant.name} a été ajouté au voyage `)
+                        setParticipantList((oldArray: any) => [...oldArray, response.data.participant])
 
+                    }
+                })
+        }
+
+    }
     const deleteParticipantDb = () => {
         if(!!IDdeleteParticipant) {
             axios
@@ -106,7 +119,7 @@ const Team = ({tripId, isLoading, handleLoading} : {tripId: string, isLoading: b
                                                                     },
                                                                 },
                                                                 'Voir le détail',
-                                                                {
+                                                                participant.userId ? null : {
                                                                     text: 'Renommer',
                                                                     menuItemProps: {
                                                                         onClick: () => {

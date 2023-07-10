@@ -11,7 +11,7 @@ export default async function handlerParticipantById(req: NextApiRequest, res: N
     switch (req.method){
         // case 'GET': getStep(id).then(s => res.json({byId: id, step: s})); break;
         case 'DELETE': removeParticipant(id).then(s => res.json(s)); break;
-        case 'PUT': updateParticipant(id, req.body).then(s => res.json(s)); break;
+        case 'PUT': updateParticipant(id, req.body.data).then(s => res.json(s)); break;
     }
 }
 
@@ -36,7 +36,7 @@ const updateParticipant = async (id: string, data: any) => {
         name: data.name,
         userId: data.userId,
     }
-
+    
     if(!!body) {
         return prisma.participant.update({
             where: {id: id},
