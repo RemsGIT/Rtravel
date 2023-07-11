@@ -5,8 +5,8 @@ import {useSettings} from "@/hooks/useSettings";
 import {useAuth} from "@/hooks/useAuth";
 import {
     Box,
-    BoxProps, Button, Checkbox, Divider,
-    FormControl, FormControlLabel ,FormHelperText, IconButton,
+    BoxProps, Button, Checkbox, CircularProgress, Divider,
+    FormControl, FormControlLabel, FormHelperText, IconButton,
     InputAdornment, InputLabel,
     OutlinedInput, TextField,
     Typography,
@@ -92,6 +92,8 @@ const LinkStyled = styled(Link)(({ theme }) => ({
 const RegisterPage = () => {
     // ** States
     const [showPassword, setShowPassword] = useState<boolean>(false)
+    const [isRegistering, setIsRegistering] = useState<boolean>(false)
+
 
     // ** Hooks
     const theme = useTheme()
@@ -121,8 +123,9 @@ const RegisterPage = () => {
     const onSubmit = (data: FormData) => {
         const { email, username, password, terms } = data
 
+        setIsRegistering(true)
         register({ email, username, password, terms }, (err: any) => {
-            console.log(err)
+            setIsRegistering(false)
         })
     }
 
@@ -353,8 +356,23 @@ const RegisterPage = () => {
                                     <FormHelperText sx={{ mt: 0, color: 'error.main' }}>{errors.terms.message}</FormHelperText>
                                 )}
                             </FormControl>
-                            <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
-                                {"S'inscrire"}
+                            <Button fullWidth size='large' type='submit' variant='contained' disabled={isRegistering}
+                                    sx={{
+                                        mb: 7,
+                                        "&.Mui-disabled": {
+                                            background: theme.palette.primary.main,
+                                            filter: "grayscale(50%)",
+                                            color: "#fff"
+                                        }
+                                    }}
+                            >
+                                {isRegistering
+                                    ? (<Box sx={{display: 'flex', alignItems: 'center'}} >
+                                            <CircularProgress color={"inherit"} size={25}/>
+                                            <Typography variant={"inherit"} sx={{ml: 2}}>Inscription en cours</Typography>
+                                        </Box>)
+                                    : "S'inscrire"
+                                }
                             </Button>
                             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                                 <Typography variant='body2' sx={{ mr: 2 }}>

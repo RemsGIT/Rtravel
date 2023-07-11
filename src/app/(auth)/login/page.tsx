@@ -4,7 +4,7 @@ import {styled, useTheme} from "@mui/material/styles";
 import {useSettings} from "@/hooks/useSettings";
 import {
     Box,
-    BoxProps, Button, Checkbox, Divider,
+    BoxProps, Button, Checkbox, CircularProgress, Divider,
     FormControl, FormHelperText, IconButton,
     InputAdornment, InputLabel,
     OutlinedInput, TextField,
@@ -92,6 +92,7 @@ const schema = yup.object().shape({
 const LoginPage = () => {
     const [rememberMe, setRememberMe] = useState<boolean>(true)
     const [showPassword, setShowPassword] = useState<boolean>(false)
+    const [isSigning, setIsSigning] = useState<boolean>(false)
 
     // ** Hooks
     const theme = useTheme()
@@ -118,6 +119,7 @@ const LoginPage = () => {
     async function onSubmit (data: FormData) {
         const { email, password } = data
 
+        setIsSigning(true)
         await signIn('credentials', {
             redirect: false,
             email: email,
@@ -127,7 +129,7 @@ const LoginPage = () => {
         }).then(response => {
             toast.remove()
 
-            console.log(response)
+            setIsSigning(false)
             let errorMessage = "Veuillez réessayer plus tard."
             if(response) {
                 if(response.ok) {
@@ -332,8 +334,23 @@ const LoginPage = () => {
                                 />
                                 <LinkStyled href='/forgot-password'>Mot de passe oublié?</LinkStyled>
                             </Box>
-                            <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
-                                CONNEXION
+                            <Button fullWidth size='large' type='submit' variant='contained' disabled={isSigning}
+                                    sx={{
+                                        mb: 7,
+                                        "&.Mui-disabled": {
+                                            background: theme.palette.primary.main,
+                                            filter: "grayscale(50%)",
+                                            color: "#fff"
+                                        }
+                                    }}
+                            >
+                                {isSigning
+                                    ? (<Box sx={{display: 'flex', alignItems: 'center'}}>
+                                        <CircularProgress color={"inherit"} size={25}/>
+                                            <Typography variant={"inherit"} sx={{ml: 2}}>Connexion en cours</Typography>
+                                        </Box>)
+                                    : 'Connexion'
+                                }
                             </Button>
                             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                                 <Typography variant='body2' sx={{ mr: 2 }}>
