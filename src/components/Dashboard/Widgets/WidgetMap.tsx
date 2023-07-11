@@ -9,7 +9,7 @@ const geoUrl = "./world.json"
 
 const WidgetMap = () => {
     
-    const countryVisited = ['FRA', 'ITA', 'GBR', 'NLD']
+    const countryVisited = ['FRA', 'ITA', 'GBR', 'NLD', 'BEL', 'ESP', 'PRT']
 
     const getCountryColor = (code: string) => {
         return countryVisited.includes(code) ? "#FC8D59" : "#93B7BE";
