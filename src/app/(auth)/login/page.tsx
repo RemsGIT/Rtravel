@@ -129,7 +129,6 @@ const LoginPage = () => {
         }).then(response => {
             toast.remove()
 
-            setIsSigning(false)
             let errorMessage = "Veuillez réessayer plus tard."
             if(response) {
                 if(response.ok) {
@@ -156,6 +155,7 @@ const LoginPage = () => {
                 }
             })
 
+            setIsSigning(false)
         });
     }
 
